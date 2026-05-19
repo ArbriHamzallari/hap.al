@@ -107,7 +107,8 @@ The original plan used APScheduler with Supabase as job store. Problem: APSchedu
 
 | Layer | Technology | Why |
 |---|---|---|
-| Framework | React 19 + Vite | Arbri's chosen stack; shared codebase for landing page now + Telegram Mini App later |
+| Framework | React 19 + Vite | Arbri
+'s chosen stack; shared codebase for landing page now + Telegram Mini App later |
 | Styling | Tailwind CSS | Fast iteration, no CSS naming bikeshed |
 | Routing | React Router | Standard SPA routing for /, /privacy, /terms, /mini-app/* |
 | i18n | `react-i18next` | Bilingual UI (EN/SQ) with same JSON keys as bot |
@@ -1175,10 +1176,23 @@ USE_POLLING=false    # true for local dev, false for production webhook
 
 ## Changelog
 
+- **2026-05-20** — Phase 1b shipped on top of 1a. Field-level Fernet encryption (`app/security/encryption.py`) for `financial_situation`, `personality_notes`, `fears`; `ENCRYPTION_KEY` is now a required env var and the `Settings` field validator rejects startup with a bad key. Extended `User` model + `users.py` so `get_or_create_user` decrypts sensitive fields transparently, plus `update_field` (encrypts when writing a sensitive column) and `update_profile` (bulk write + flip `onboarding_complete`). Button callbacks now persist structured columns: `fin:tight` → `financial_situation`, `time:full` → `time_availability`, etc. (see `keyboards.CALLBACK_FIELD_VALUES`). New ideas CRUD (`app/database/ideas.py`) with `get_active_idea`, `upsert_active_idea`, `deactivate_active_idea`. New extraction module (`app/conversation/extraction.py`) makes one-shot Haiku calls returning JSON for profile (skills/location/motivation/fears/personality_notes) or idea (title/description/target_customer/problem_solved/business_model/current_stage) fields. New trigger markers `[ONBOARDING_DONE]` and `[IDEA_DETECTED]` in `markers.py`; bot runs the corresponding extraction inline before sending the reply. `context_builder.build_system_prompt` now uses `user.onboarding_complete` (not history) to pick task block, populates richer `## ABOUT THIS USER` and a new `## THEIR CURRENT IDEA` section. `/myidea` shows the current idea record; `/newidea` deactivates it and continues conversation. 39 tests pass.
+- **2026-05-20** — Phase 1a (persistence) + reminders shipped. Conversation engine refactored off in-memory dict onto Supabase: `users` table (`get_or_create_user`, `last_active` bump per turn) and `conversations` table (every user + assistant message persisted, history loaded per-call). New `app/conversation/context_builder.py` assembles the system prompt per §8 with dynamic ABOUT-THIS-USER + CURRENT-CONTEXT (local Tirane time injected per call so the LLM can compute relative times). Returning users (history with prior assistant message) get a "continuing" task block instead of onboarding. Replaced the brittle turn-counter keyboard approach with LLM-emitted markers: `[BTN:financial|experience|time|day_job]` couples keyboard 1:1 to the actual question asked, parsed by `app/conversation/markers.py`. Bold/italic rendering extended in `telegram_format.py` to handle `**bold**`, `*italic*`, `_italic_` with strict boundary rules so `snake_case` and bullets aren't mis-italicized. Reminders: LLM emits `[REMIND:ISO|message]`, bot writes a row to `homework` (durable across restarts), and an in-process asyncio poller in `app/conversation/reminders.py` fires due reminders every 60s via `bot.send_message`. This is Phase-2-lite — Phase 2 proper swaps the poller for pg_cron + `/internal/process-followups` once Railway deployment is in place. Added `/help` command. Deleted orphaned `app/onboarding/tracker.py`. 29 tests pass.
 - **2026-05-19** — Foundation pass before any feature code: removed duplicate root `.venv`; fixed permissive RLS in `001.initial.schema.sql` (the `USING (TRUE)` policies silently granted access to `anon` and `authenticated` — now relies on `service_role`'s BYPASSRLS attribute with no policies); aligned `.env.example` model IDs (`ANALYSIS_LLM_MODEL=claude-sonnet-4-6`, `DEFAULT_LLM_MODEL=claude-haiku-4-5-20251001`) and added `SUPABASE_ANON_KEY` + `SENTRY_DSN`; reset frontend off the Vite boilerplate to a clean shell (Tailwind v4 via `@tailwindcss/vite`, React Router, `react-i18next` with EN/SQ stubs, Landing/Privacy/Terms pages); added `backend/pyproject.toml` for ruff + mypy + pytest config; bumped CLAUDE.md to React 19 to match installed deps.
 - **2026-05-18** — Initial rewrite of original CLAUDE-bot.md. Renamed product to Hap. Locked stack: Python/FastAPI + React/Vite + Supabase + Railway + Claude (Haiku 4.5 / Sonnet 4.6). Added phased rollout plan (§16), bilingual strategy (§15), Mini App section (§14), analytics section (§17), local dev story, prompt versioning, and honest encryption threat model. Replaced APScheduler with pg_cron. Removed "API Gateway" oversell from architecture diagram.
 
 ---
+### Mini App — Product Canvas View (Post-MVP)
+
+A visual dashboard inside Telegram Mini App where users can see:
+- Idea overview card (title, description, validation score gauge)
+- Component breakdown (problem, customer, business model, advantage)
+- Strengths vs. weaknesses side by side
+- Homework tracker with completion status
+- Journey timeline showing pivots, milestones, score changes
+
+All data pulled from existing tables — no new data collection needed.
+The bot conversation IS the input method. The canvas IS the output view.
 
 *Maintained by: Arbri Hamzallari*
 
