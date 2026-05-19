@@ -112,10 +112,11 @@ ALTER TABLE homework ENABLE ROW LEVEL SECURITY;
 ALTER TABLE journey_events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE analytics_events ENABLE ROW LEVEL SECURITY;
 
--- RLS Policies: service role can do everything, no public access
-CREATE POLICY "Service role full access" ON users FOR ALL USING (TRUE) WITH CHECK (TRUE);
-CREATE POLICY "Service role full access" ON ideas FOR ALL USING (TRUE) WITH CHECK (TRUE);
-CREATE POLICY "Service role full access" ON conversations FOR ALL USING (TRUE) WITH CHECK (TRUE);
-CREATE POLICY "Service role full access" ON homework FOR ALL USING (TRUE) WITH CHECK (TRUE);
-CREATE POLICY "Service role full access" ON journey_events FOR ALL USING (TRUE) WITH CHECK (TRUE);
-CREATE POLICY "Service role full access" ON analytics_events FOR ALL USING (TRUE) WITH CHECK (TRUE);
+-- RLS is enabled above with NO permissive policies. This is intentional:
+--   * The Supabase `service_role` key bypasses RLS (BYPASSRLS attribute) — backend has full access.
+--   * `anon` and `authenticated` roles are denied all access on every table.
+-- Matches §9.5 of CLAUDE.md: service-role-only, no public/anon access.
+-- The previous version of this file used `CREATE POLICY ... USING (TRUE)`, which silently
+-- granted full access to anon and authenticated. Do not re-introduce that pattern.
+-- For post-MVP Mini App access, the backend will mediate via initData; do NOT add an
+-- `authenticated` policy here until that work is scoped, or we re-open the door.
