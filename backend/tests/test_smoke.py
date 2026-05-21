@@ -78,3 +78,28 @@ def test_about_user_hides_empty_fields() -> None:
     assert "Skills" not in prompt
     assert "Financial situation" not in prompt
     assert "Personality notes" not in prompt
+
+
+def test_user_accepts_null_skills_from_db() -> None:
+    # Postgres TEXT[] columns without a DEFAULT come back as None; the model must coerce to [].
+    user = User.model_validate(
+        {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "telegram_id": 1,
+            "skills": None,
+        }
+    )
+    assert user.skills == []
+
+
+def test_idea_accepts_null_arrays_from_db() -> None:
+    idea = Idea.model_validate(
+        {
+            "id": "00000000-0000-0000-0000-000000000002",
+            "user_id": "00000000-0000-0000-0000-000000000001",
+            "strengths": None,
+            "weaknesses": None,
+        }
+    )
+    assert idea.strengths == []
+    assert idea.weaknesses == []

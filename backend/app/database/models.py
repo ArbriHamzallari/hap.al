@@ -3,9 +3,14 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Literal
+from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+
+def _none_to_empty_list(v: Any) -> Any:
+    """Postgres TEXT[] columns without a DEFAULT come back as None; treat that as []."""
+    return [] if v is None else v
 
 
 class User(BaseModel):
@@ -39,6 +44,8 @@ class User(BaseModel):
     created_at: datetime | None = None
     last_active: datetime | None = None
 
+    _normalize_skills = field_validator("skills", mode="before")(_none_to_empty_list)
+
 
 class Idea(BaseModel):
     """Subset of the `ideas` table the conversation engine cares about."""
@@ -60,3 +67,6 @@ class Idea(BaseModel):
     is_active: bool = True
     created_at: datetime | None = None
     updated_at: datetime | None = None
+
+    _normalize_strengths = field_validator("strengths", mode="before")(_none_to_empty_list)
+    _normalize_weaknesses = field_validator("weaknesses", mode="before")(_none_to_empty_list)
