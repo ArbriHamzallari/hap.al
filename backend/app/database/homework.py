@@ -1,9 +1,4 @@
-"""Homework table CRUD. Phase 1a uses it as the durable store for reminders.
-
-Phase 2 will extend with completion tracking, follow-up status transitions,
-and the pg_cron-driven process-followups endpoint. For now we just write and
-read pending reminders.
-"""
+"""Homework table CRUD. Durable store for reminders + Phase 2 lifecycle tracking."""
 
 from __future__ import annotations
 
@@ -14,6 +9,7 @@ from typing import Any
 from app.database.client import get_supabase
 
 _BATCH_LIMIT = 50
+_PENDING_LIST_LIMIT = 20
 
 
 async def create_reminder(user_id: str, when: datetime, message: str) -> str:
@@ -68,3 +64,52 @@ async def mark_reminder_sent(homework_id: str) -> None:
         client.table("homework").update({"follow_up_sent": True}).eq("id", homework_id).execute()
 
     await asyncio.to_thread(_update)
+
+
+async def list_pending(user_id: str, limit: int = _PENDING_LIST_LIMIT) -> list[dict[str, Any]]:
+    """All pending homework for a user, soonest-due first. Used by /homework + system prompt."""
+
+    def _query() -> list[dict[str, Any]]:
+        client = get_supabase()
+        result = (
+            client.table("homework")
+            .select("id, task_description, due_date, follow_up_sent")
+            .eq("user_id", user_id)
+            .eq("status", "pending")
+            .order("due_date", desc=False)
+            .limit(limit)
+            .execute()
+        )
+        return result.data
+
+    return await asyncio.to_thread(_query)
+
+
+async def mark_most_recent_sent_pending(user_id: str, new_status: str) -> dict[str, Any] | None:
+    """Update the most-recently-due pending homework that was already reminded.
+
+    Returns the row that was updated, or None if no candidate row existed (in which case the
+    LLM's HOMEWORK_DONE/SKIPPED marker is a no-op — probably emitted in error).
+    """
+    if new_status not in {"completed", "skipped"}:
+        raise ValueError(f"invalid status transition: {new_status}")
+
+    def _query() -> dict[str, Any] | None:
+        client = get_supabase()
+        candidate = (
+            client.table("homework")
+            .select("id, task_description, due_date, idea_id")
+            .eq("user_id", user_id)
+            .eq("follow_up_sent", True)
+            .eq("status", "pending")
+            .order("due_date", desc=True)
+            .limit(1)
+            .execute()
+        )
+        if not candidate.data:
+            return None
+        row = candidate.data[0]
+        client.table("homework").update({"status": new_status}).eq("id", row["id"]).execute()
+        return row
+
+    return await asyncio.to_thread(_query)
