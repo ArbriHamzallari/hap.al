@@ -1,8 +1,4 @@
-"""Conversation engine: persists messages, builds context, calls Anthropic, runs extraction.
-
-Phase 1b: history lives in Supabase. After every reply, the bot inspects markers and may ask
-the engine to run profile or idea extraction — separate LLM calls that read the same history.
-"""
+"""Conversation engine: persists messages, builds context, calls Anthropic, runs extraction."""
 
 from __future__ import annotations
 
@@ -15,7 +11,9 @@ from app.config import Settings
 from app.conversation.context_builder import build_system_prompt
 from app.conversation.extraction import extract_idea, extract_profile
 from app.conversation.prompts.base_en import VERSION as BASE_VERSION
+from app.database import journey_events
 from app.database.conversations import append_message, list_recent
+from app.database.homework import list_pending, mark_most_recent_sent_pending
 from app.database.ideas import get_active_idea, upsert_active_idea
 from app.database.models import User
 from app.database.users import update_profile
@@ -38,6 +36,12 @@ def _normalize(history: list[MessageParam]) -> list[MessageParam]:
     return out
 
 
+def _is_title_pivot(old: str | None, new: str | None) -> bool:
+    if not old or not new:
+        return False
+    return old.strip().lower() != new.strip().lower()
+
+
 class ConversationEngine:
     """Anthropic client + DB-backed conversation history + structured extraction."""
 
@@ -55,7 +59,8 @@ class ConversationEngine:
         )
         history = await list_recent(user.id, limit=_HISTORY_LIMIT)
         idea = await get_active_idea(user.id)
-        system_prompt = build_system_prompt(user, history, idea)
+        pending = await list_pending(user.id)
+        system_prompt = build_system_prompt(user, history, idea, pending)
 
         response = await self._client.messages.create(
             model=self._model,
@@ -86,11 +91,45 @@ class ConversationEngine:
         logger.info("profile extracted and stored", extra={"user_id": user.id})
 
     async def run_idea_extraction(self, user: User) -> None:
-        """Pull idea fields from history and upsert the active idea."""
+        """Pull idea fields from history, upsert active idea, log a pivot if the title changed."""
         history = await list_recent(user.id, limit=_EXTRACTION_HISTORY_LIMIT)
         data = await extract_idea(self._client, history, self._model)
         if data is None:
             logger.warning("idea extraction returned nothing", extra={"user_id": user.id})
             return
+
+        existing = await get_active_idea(user.id)
+        new_title = data.get("title")
+        if existing is not None and _is_title_pivot(existing.title, new_title):
+            await journey_events.record_event(
+                user_id=user.id,
+                idea_id=existing.id,
+                event_type="pivot",
+                description=f"{existing.title} → {new_title}",
+                metadata={"from_title": existing.title, "to_title": new_title},
+            )
+
         await upsert_active_idea(user.id, data)
         logger.info("idea extracted and stored", extra={"user_id": user.id})
+
+    async def run_homework_update(self, user: User, *, completed: bool) -> None:
+        """Flip the most recently sent pending homework. Record a milestone on completion."""
+        new_status = "completed" if completed else "skipped"
+        row = await mark_most_recent_sent_pending(user.id, new_status)
+        if row is None:
+            logger.info(
+                "homework marker had no matching sent-pending row",
+                extra={"user_id": user.id},
+            )
+            return
+        if completed:
+            await journey_events.record_event(
+                user_id=user.id,
+                idea_id=row.get("idea_id"),
+                event_type="milestone",
+                description=f"Completed: {row.get('task_description', '(task)')}",
+            )
+        logger.info(
+            "homework marked",
+            extra={"user_id": user.id, "homework_id": row["id"], "status": new_status},
+        )

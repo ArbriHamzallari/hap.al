@@ -13,6 +13,8 @@ _BTN_PATTERN = re.compile(r"\[BTN:(financial|experience|time|day_job)\]", re.IGN
 _REMIND_PATTERN = re.compile(r"\[REMIND:([^|\]]+)\|([^\]]+)\]")
 _ONBOARDING_DONE_PATTERN = re.compile(r"\[ONBOARDING_DONE\]", re.IGNORECASE)
 _IDEA_DETECTED_PATTERN = re.compile(r"\[IDEA_DETECTED\]", re.IGNORECASE)
+_HOMEWORK_DONE_PATTERN = re.compile(r"\[HOMEWORK_DONE\]", re.IGNORECASE)
+_HOMEWORK_SKIPPED_PATTERN = re.compile(r"\[HOMEWORK_SKIPPED\]", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -28,6 +30,8 @@ class ParsedReply:
     reminders: tuple[ScheduledReminder, ...] = field(default_factory=tuple)
     onboarding_done: bool = False
     idea_detected: bool = False
+    homework_done: bool = False
+    homework_skipped: bool = False
 
 
 def parse_reply(raw: str) -> ParsedReply:
@@ -47,11 +51,15 @@ def parse_reply(raw: str) -> ParsedReply:
 
     onboarding_done = bool(_ONBOARDING_DONE_PATTERN.search(raw))
     idea_detected = bool(_IDEA_DETECTED_PATTERN.search(raw))
+    homework_done = bool(_HOMEWORK_DONE_PATTERN.search(raw))
+    homework_skipped = bool(_HOMEWORK_SKIPPED_PATTERN.search(raw))
 
     cleaned = _BTN_PATTERN.sub("", raw)
     cleaned = _REMIND_PATTERN.sub("", cleaned)
     cleaned = _ONBOARDING_DONE_PATTERN.sub("", cleaned)
     cleaned = _IDEA_DETECTED_PATTERN.sub("", cleaned)
+    cleaned = _HOMEWORK_DONE_PATTERN.sub("", cleaned)
+    cleaned = _HOMEWORK_SKIPPED_PATTERN.sub("", cleaned)
     cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
     cleaned = cleaned.strip()
 
@@ -61,6 +69,8 @@ def parse_reply(raw: str) -> ParsedReply:
         reminders=tuple(reminders),
         onboarding_done=onboarding_done,
         idea_detected=idea_detected,
+        homework_done=homework_done,
+        homework_skipped=homework_skipped,
     )
 
 

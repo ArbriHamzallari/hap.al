@@ -17,6 +17,8 @@ def test_no_markers() -> None:
     assert result.reminders == ()
     assert result.onboarding_done is False
     assert result.idea_detected is False
+    assert result.homework_done is False
+    assert result.homework_skipped is False
 
 
 def test_button_marker_stripped() -> None:
@@ -92,6 +94,20 @@ def test_idea_detected_marker() -> None:
     result = parse_reply("That's a real idea!\n[IDEA_DETECTED]")
     assert result.idea_detected is True
     assert "[IDEA_DETECTED]" not in result.text
+
+
+def test_homework_done_marker() -> None:
+    result = parse_reply("Nice work, that's huge.\n[HOMEWORK_DONE]")
+    assert result.homework_done is True
+    assert result.homework_skipped is False
+    assert "[HOMEWORK_DONE]" not in result.text
+
+
+def test_homework_skipped_marker() -> None:
+    result = parse_reply("No worries, life happens.\n[HOMEWORK_SKIPPED]")
+    assert result.homework_skipped is True
+    assert result.homework_done is False
+    assert "[HOMEWORK_SKIPPED]" not in result.text
 
 
 def test_all_triggers_together() -> None:

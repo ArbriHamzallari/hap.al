@@ -1,7 +1,8 @@
-"""Phase 1b smoke tests. The engine itself is not exercised — Anthropic calls cost money."""
+"""Phase 2a smoke tests. The engine itself is not exercised — Anthropic calls cost money."""
 
 from __future__ import annotations
 
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from fastapi.testclient import TestClient
@@ -47,6 +48,7 @@ def test_system_prompt_for_new_user_includes_onboarding() -> None:
     assert onboarding.ONBOARDING_TASK in prompt
     assert prompt.rstrip().endswith(base_en.ANTI_INJECTION)
     assert "## THEIR CURRENT IDEA" not in prompt
+    assert "## PENDING HOMEWORK" not in prompt
 
 
 def test_system_prompt_for_onboarded_user_uses_continuing_task() -> None:
@@ -72,8 +74,30 @@ def test_system_prompt_includes_idea_when_present() -> None:
     assert "exploring" in prompt
 
 
+def test_system_prompt_includes_pending_homework_section() -> None:
+    user = _user(onboarding_complete=True)
+    future = (datetime.now(UTC) + timedelta(days=2)).isoformat()
+    pending = [
+        {
+            "id": "h1",
+            "task_description": "Call 3 restaurants",
+            "due_date": future,
+            "follow_up_sent": False,
+        }
+    ]
+    prompt = build_system_prompt(user, history=[], pending_homework=pending)
+    assert "## PENDING HOMEWORK" in prompt
+    assert "Call 3 restaurants" in prompt
+    assert "HOMEWORK_DONE" in prompt  # the instruction line is in the section
+
+
+def test_pending_homework_section_omitted_when_empty() -> None:
+    prompt = build_system_prompt(_user(), history=[], pending_homework=[])
+    assert "## PENDING HOMEWORK" not in prompt
+
+
 def test_about_user_hides_empty_fields() -> None:
-    user = _user()  # only first_name populated
+    user = _user()
     prompt = build_system_prompt(user, history=[])
     assert "Skills" not in prompt
     assert "Financial situation" not in prompt
@@ -81,7 +105,6 @@ def test_about_user_hides_empty_fields() -> None:
 
 
 def test_user_accepts_null_skills_from_db() -> None:
-    # Postgres TEXT[] columns without a DEFAULT come back as None; the model must coerce to [].
     user = User.model_validate(
         {
             "id": "00000000-0000-0000-0000-000000000001",

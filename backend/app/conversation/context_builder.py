@@ -1,12 +1,13 @@
-"""Assemble the full system prompt from user + idea + history (CLAUDE.md §8).
+"""Assemble the full system prompt from user + idea + pending homework + history (CLAUDE.md §8).
 
-Phase 1b fills in sections 1-5, 7, 8, 9. Section 6 (pending homework) arrives once
-homework completion tracking exists (Phase 2).
+Phase 2a fills in sections 1-9. The ``history`` argument is currently used only as a hook for
+future conversation summarization; the LLM receives the actual history via the messages array.
 """
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import UTC, datetime
+from typing import Any
 from zoneinfo import ZoneInfo
 
 from anthropic.types import MessageParam
@@ -82,6 +83,43 @@ def _current_idea(idea: Idea) -> str:
     return "\n".join(lines)
 
 
+def _pending_homework(rows: list[dict[str, Any]]) -> str:
+    lines = [
+        "## PENDING HOMEWORK",
+        "Tasks you assigned that the user hasn't reported on yet. If they tell you they did "
+        "or skipped one, emit [HOMEWORK_DONE] or [HOMEWORK_SKIPPED] at the end of your reply.",
+    ]
+    for row in rows:
+        desc = row.get("task_description") or "(no description)"
+        sent = "reminder sent" if row.get("follow_up_sent") else "reminder upcoming"
+        due_str = _format_due(row.get("due_date"))
+        lines.append(f"- {desc} — {due_str}, {sent}")
+    return "\n".join(lines)
+
+
+def _format_due(iso_value: Any) -> str:
+    if not iso_value:
+        return "no due date"
+    try:
+        when = datetime.fromisoformat(str(iso_value))
+    except ValueError:
+        return "no due date"
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=UTC)
+    delta = when - datetime.now(UTC)
+    minutes = int(delta.total_seconds() // 60)
+    if minutes < -60 * 24:
+        days = -minutes // (60 * 24)
+        return f"due {days}d ago"
+    if minutes < 0:
+        return "due now"
+    if minutes < 60:
+        return f"due in {minutes}m"
+    if minutes < 60 * 24:
+        return f"due in {minutes // 60}h"
+    return f"due in {minutes // (60 * 24)}d"
+
+
 def _current_context() -> str:
     now = datetime.now(_TIRANE)
     return (
@@ -95,11 +133,14 @@ def build_system_prompt(
     user: User,
     history: list[MessageParam],  # noqa: ARG001 - kept for API symmetry; may inform summarization later
     idea: Idea | None = None,
+    pending_homework: list[dict[str, Any]] | None = None,
 ) -> str:
     """Build the full system prompt with the right task block based on onboarding state."""
     sections = [base_en.build_base_prompt(), _about_user(user)]
     if idea is not None:
         sections.append(_current_idea(idea))
+    if pending_homework:
+        sections.append(_pending_homework(pending_homework))
     sections.append(_current_context())
 
     if user.onboarding_complete:
