@@ -1,8 +1,10 @@
-"""Telegram bot entrypoint. Phase 1b: DB-backed, structured extraction, /myidea + /newidea."""
+"""Telegram bot entrypoint. Phase 2a: follow-up flow, /homework, /progress."""
 
 from __future__ import annotations
 
 import logging
+from datetime import UTC, datetime
+from typing import Any
 
 from telegram import Chat, InlineKeyboardMarkup, Update
 from telegram.constants import ParseMode
@@ -21,7 +23,8 @@ from app.conversation.engine import ConversationEngine
 from app.conversation.keyboards import field_for_callback, get_keyboard, label_for_callback
 from app.conversation.markers import parse_reply
 from app.conversation.reminders import reminder_loop
-from app.database.homework import create_reminder
+from app.database import journey_events
+from app.database.homework import create_reminder, list_pending
 from app.database.ideas import deactivate_active_idea, get_active_idea
 from app.database.users import get_or_create_user, update_field
 from app.utils.logger import configure_logging, hash_telegram_id
@@ -35,12 +38,18 @@ _NON_TEXT_FALLBACK = (
 )
 _ERROR_FALLBACK = "Something went wrong on my end. Give me a moment and try again."
 _NO_IDEA_TEXT = "You haven't shared an idea with me yet. Tell me about it — what are you thinking?"
+_NO_HOMEWORK_TEXT = "No active homework right now. What's the next move?"
+_NO_PROGRESS_TEXT = (
+    "No journey milestones yet. Once we work on tasks together, I'll track them here."
+)
 
 _HELP_TEXT = (
     "Here's what I can do:\n"
     "/start — restart our conversation\n"
     "/myidea — show your current idea\n"
     "/newidea — archive the current idea and explore a new one\n"
+    "/homework — list your pending tasks\n"
+    "/progress — show your journey timeline\n"
     "/help — show this message\n\n"
     "Otherwise just text me normally. I remember everything across sessions and I'll "
     "ping you when we agree on a task."
@@ -98,6 +107,13 @@ async def _handle(update: Update, context: ContextTypes.DEFAULT_TYPE, text: str)
     if parsed.idea_detected:
         logger.info("idea detected, extracting", extra={"user_hash": user_hash})
         await engine.run_idea_extraction(user)
+
+    if parsed.homework_done:
+        logger.info("homework reported done", extra={"user_hash": user_hash})
+        await engine.run_homework_update(user, completed=True)
+    elif parsed.homework_skipped:
+        logger.info("homework reported skipped", extra={"user_hash": user_hash})
+        await engine.run_homework_update(user, completed=False)
 
     markup = get_keyboard(parsed.button_key)
     await _send_reply(chat, parsed.text, reply_markup=markup)
@@ -204,6 +220,92 @@ async def _newidea(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await _handle(update, context, "/newidea")
 
 
+async def _homework(update: Update, _context: ContextTypes.DEFAULT_TYPE) -> None:
+    chat = update.effective_chat
+    tg_user = update.effective_user
+    if chat is None or tg_user is None:
+        return
+
+    user = await get_or_create_user(
+        telegram_id=tg_user.id,
+        username=tg_user.username,
+        first_name=tg_user.first_name,
+    )
+    pending = await list_pending(user.id)
+    if not pending:
+        await chat.send_message(_NO_HOMEWORK_TEXT)
+        return
+
+    lines = ["**Your homework:**", ""]
+    for row in pending:
+        desc = row.get("task_description") or "(no description)"
+        due_str = _describe_due(row.get("due_date"))
+        sent_status = "awaiting your update" if row.get("follow_up_sent") else due_str
+        lines.append(f"- {desc}")
+        lines.append(f"   _{sent_status}_")
+    await _send_reply(chat, "\n".join(lines))
+
+
+async def _progress(update: Update, _context: ContextTypes.DEFAULT_TYPE) -> None:
+    chat = update.effective_chat
+    tg_user = update.effective_user
+    if chat is None or tg_user is None:
+        return
+
+    user = await get_or_create_user(
+        telegram_id=tg_user.id,
+        username=tg_user.username,
+        first_name=tg_user.first_name,
+    )
+    events = await journey_events.list_recent(user.id)
+    if not events:
+        await chat.send_message(_NO_PROGRESS_TEXT)
+        return
+
+    lines = ["**Your journey:**", ""]
+    for ev in events:
+        when_str = _format_event_when(ev.get("created_at"))
+        kind = str(ev.get("event_type", "")).replace("_", " ")
+        desc = ev.get("description") or ""
+        lines.append(f"*{when_str}* — {kind}")
+        if desc:
+            lines.append(f"  {desc}")
+        lines.append("")
+    await _send_reply(chat, "\n".join(lines).rstrip())
+
+
+def _describe_due(iso_value: Any) -> str:
+    if not iso_value:
+        return "no due date"
+    try:
+        when = datetime.fromisoformat(str(iso_value))
+    except ValueError:
+        return "no due date"
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=UTC)
+    delta = when - datetime.now(UTC)
+    minutes = int(delta.total_seconds() // 60)
+    if minutes < -60 * 24:
+        return f"due {-minutes // (60 * 24)}d ago"
+    if minutes < 0:
+        return "due now"
+    if minutes < 60:
+        return f"due in {minutes}m"
+    if minutes < 60 * 24:
+        return f"due in {minutes // 60}h"
+    return f"due in {minutes // (60 * 24)}d"
+
+
+def _format_event_when(iso_value: Any) -> str:
+    if not iso_value:
+        return "unknown"
+    try:
+        when = datetime.fromisoformat(str(iso_value))
+    except ValueError:
+        return "unknown"
+    return when.strftime("%b %d, %H:%M")
+
+
 async def _on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.error("handler error", exc_info=context.error)
     if isinstance(update, Update) and update.effective_chat is not None:
@@ -234,6 +336,8 @@ def main() -> None:
     application.add_handler(CommandHandler("help", _help))
     application.add_handler(CommandHandler("myidea", _myidea))
     application.add_handler(CommandHandler("newidea", _newidea))
+    application.add_handler(CommandHandler("homework", _homework))
+    application.add_handler(CommandHandler("progress", _progress))
     application.add_handler(CallbackQueryHandler(_on_callback))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, _on_text))
     application.add_handler(MessageHandler(~filters.TEXT, _on_non_text))
