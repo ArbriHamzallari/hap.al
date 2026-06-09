@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any
+from typing import Any, cast
 
 from app.database.client import get_supabase
 
@@ -46,6 +46,26 @@ async def list_recent(user_id: str, limit: int = 20) -> list[dict[str, Any]]:
             .limit(limit)
             .execute()
         )
-        return result.data
+        return cast(list[dict[str, Any]], result.data)
+
+    return await asyncio.to_thread(_query)
+
+
+async def get_latest_validation(idea_id: str) -> dict[str, Any] | None:
+    """Most recent validation_feedback event for an idea. Used to populate CURRENT IDEA prompt."""
+
+    def _query() -> dict[str, Any] | None:
+        client = get_supabase()
+        result = (
+            client.table("journey_events")
+            .select("description, metadata, created_at")
+            .eq("idea_id", idea_id)
+            .eq("event_type", "validation_feedback")
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+        rows = cast(list[dict[str, Any]], result.data)
+        return rows[0] if rows else None
 
     return await asyncio.to_thread(_query)

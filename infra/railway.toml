@@ -1,0 +1,2 @@
+# Railway config lives at backend/railway.toml.
+# Set Railway service Root Directory to: backend

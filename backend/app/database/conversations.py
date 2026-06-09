@@ -52,7 +52,7 @@ async def list_recent(user_id: str, limit: int = _HISTORY_LIMIT) -> list[Message
             .limit(limit)
             .execute()
         )
-        return result.data
+        return cast(list[dict[str, Any]], result.data)
 
     rows = await asyncio.to_thread(_query)
     rows.reverse()  # DB query returned newest-first; LLM wants oldest-first

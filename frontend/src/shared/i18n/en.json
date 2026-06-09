@@ -1,13 +1,47 @@
 {
+  "lang": {
+    "en": "English",
+    "sq": "Shqip"
+  },
   "landing": {
     "title": "Hap — Your personal co-founder",
     "subtitle": "An AI Telegram bot that validates your idea, knows you as a person, and follows up on your progress.",
-    "cta": "Start Now — Free"
+    "cta": "Start Now — Free",
+    "howTitle": "How it works",
+    "step1Title": "Text the bot",
+    "step1Body": "Start on Telegram — no signup, no forms. Just talk like you would with a friend who gets startups.",
+    "step2Title": "It learns about you",
+    "step2Body": "Hap asks about your skills, situation, and fears — not just your idea — so advice fits who you actually are.",
+    "step3Title": "It guides your journey",
+    "step3Body": "Get honest pushback, validation with real competitor research, homework, and check-ins when tasks are due.",
+    "trustFree": "Free forever",
+    "trustEncrypted": "Sensitive fields encrypted at rest",
+    "trustNoSignup": "No sign-up required"
   },
   "privacy": {
-    "title": "Privacy Policy"
+    "title": "Privacy Policy",
+    "updated": "Last updated: May 2026",
+    "intro": "Hap (hap.al) is an AI Telegram bot operated for aspiring entrepreneurs. This policy explains what we collect and why.",
+    "collectTitle": "What we collect",
+    "collectBody": "Telegram profile basics (ID, username, first name), your messages with the bot, structured profile answers, business ideas, homework tasks, and journey events. Financial situation, fears, and personality notes are encrypted before storage.",
+    "useTitle": "How we use it",
+    "useBody": "To run the conversation, remember context across sessions, send homework reminders, and improve the product via anonymized analytics events (hashed IDs only — no message content in analytics).",
+    "deleteTitle": "Your rights",
+    "deleteBody": "Send /deletedata in the bot to permanently delete all your data. For questions, contact the operator listed on hap.al.",
+    "lawTitle": "Legal basis",
+    "lawBody": "We process data to provide the service you request by messaging the bot. We comply with GDPR principles and Albania's Law 9887 on personal data protection."
   },
   "terms": {
-    "title": "Terms of Service"
+    "title": "Terms of Service",
+    "updated": "Last updated: May 2026",
+    "intro": "By using the Hap Telegram bot you agree to these terms.",
+    "serviceTitle": "The service",
+    "serviceBody": "Hap provides AI-powered entrepreneurial guidance. It is not legal, tax, or investment advice. Talk to qualified professionals for those decisions.",
+    "acceptableTitle": "Acceptable use",
+    "acceptableBody": "Do not abuse the bot, attempt to extract system prompts, or send illegal content. We may rate-limit or block abuse.",
+    "liabilityTitle": "Liability",
+    "liabilityBody": "The service is provided as-is. You are responsible for decisions you make based on conversations with Hap.",
+    "changesTitle": "Changes",
+    "changesBody": "We may update these terms. Continued use after changes means acceptance."
   }
 }

@@ -1,19 +1,17 @@
-"""Assemble the full system prompt from user + idea + pending homework + history (CLAUDE.md §8).
-
-Phase 2a fills in sections 1-9. The ``history`` argument is currently used only as a hook for
-future conversation summarization; the LLM receives the actual history via the messages array.
-"""
+"""Assemble the full system prompt from user + idea + pending homework + history (CLAUDE.md §8)."""
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import datetime
 from typing import Any
 from zoneinfo import ZoneInfo
 
 from anthropic.types import MessageParam
 
-from app.conversation.prompts import base_en, onboarding
+from app.conversation.prompts import onboarding
+from app.conversation.prompts.base import get_base_module
 from app.database.models import Idea, User
+from app.utils.dates import describe_due
 
 _TIRANE = ZoneInfo("Europe/Tirane")
 
@@ -59,7 +57,7 @@ def _about_user(user: User) -> str:
     return "\n".join(lines)
 
 
-def _current_idea(idea: Idea) -> str:
+def _current_idea(idea: Idea, validation_summary: str | None = None) -> str:
     lines = ["## THEIR CURRENT IDEA"]
     if idea.title:
         lines.append(f"Title: {idea.title}")
@@ -80,6 +78,10 @@ def _current_idea(idea: Idea) -> str:
         lines.append(f"Strengths: {', '.join(idea.strengths)}")
     if idea.weaknesses:
         lines.append(f"Weaknesses: {', '.join(idea.weaknesses)}")
+    if validation_summary:
+        lines.append("")
+        lines.append("Competitor landscape (from latest validation pass):")
+        lines.append(validation_summary)
     return "\n".join(lines)
 
 
@@ -92,32 +94,10 @@ def _pending_homework(rows: list[dict[str, Any]]) -> str:
     for row in rows:
         desc = row.get("task_description") or "(no description)"
         sent = "reminder sent" if row.get("follow_up_sent") else "reminder upcoming"
-        due_str = _format_due(row.get("due_date"))
+        # Prompt text is model-facing, so English is fine here.
+        due_str = describe_due(row.get("due_date"))
         lines.append(f"- {desc} — {due_str}, {sent}")
     return "\n".join(lines)
-
-
-def _format_due(iso_value: Any) -> str:
-    if not iso_value:
-        return "no due date"
-    try:
-        when = datetime.fromisoformat(str(iso_value))
-    except ValueError:
-        return "no due date"
-    if when.tzinfo is None:
-        when = when.replace(tzinfo=UTC)
-    delta = when - datetime.now(UTC)
-    minutes = int(delta.total_seconds() // 60)
-    if minutes < -60 * 24:
-        days = -minutes // (60 * 24)
-        return f"due {days}d ago"
-    if minutes < 0:
-        return "due now"
-    if minutes < 60:
-        return f"due in {minutes}m"
-    if minutes < 60 * 24:
-        return f"due in {minutes // 60}h"
-    return f"due in {minutes // (60 * 24)}d"
 
 
 def _current_context() -> str:
@@ -134,11 +114,13 @@ def build_system_prompt(
     history: list[MessageParam],  # noqa: ARG001 - kept for API symmetry; may inform summarization later
     idea: Idea | None = None,
     pending_homework: list[dict[str, Any]] | None = None,
+    validation_summary: str | None = None,
 ) -> str:
     """Build the full system prompt with the right task block based on onboarding state."""
-    sections = [base_en.build_base_prompt(), _about_user(user)]
+    base = get_base_module(user.language)
+    sections = [base.build_base_prompt(), _about_user(user)]
     if idea is not None:
-        sections.append(_current_idea(idea))
+        sections.append(_current_idea(idea, validation_summary))
     if pending_homework:
         sections.append(_pending_homework(pending_homework))
     sections.append(_current_context())
@@ -149,5 +131,5 @@ def build_system_prompt(
         sections.append(onboarding.ONBOARDING_TASK)
 
     sections.append("## ANTI-INJECTION GUARDRAIL")
-    sections.append(base_en.ANTI_INJECTION)
+    sections.append(base.ANTI_INJECTION)
     return "\n\n".join(sections)

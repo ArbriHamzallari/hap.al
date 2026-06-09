@@ -15,6 +15,7 @@ _ONBOARDING_DONE_PATTERN = re.compile(r"\[ONBOARDING_DONE\]", re.IGNORECASE)
 _IDEA_DETECTED_PATTERN = re.compile(r"\[IDEA_DETECTED\]", re.IGNORECASE)
 _HOMEWORK_DONE_PATTERN = re.compile(r"\[HOMEWORK_DONE\]", re.IGNORECASE)
 _HOMEWORK_SKIPPED_PATTERN = re.compile(r"\[HOMEWORK_SKIPPED\]", re.IGNORECASE)
+_VALIDATE_PATTERN = re.compile(r"\[VALIDATE\]", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -32,6 +33,7 @@ class ParsedReply:
     idea_detected: bool = False
     homework_done: bool = False
     homework_skipped: bool = False
+    validate: bool = False
 
 
 def parse_reply(raw: str) -> ParsedReply:
@@ -53,6 +55,7 @@ def parse_reply(raw: str) -> ParsedReply:
     idea_detected = bool(_IDEA_DETECTED_PATTERN.search(raw))
     homework_done = bool(_HOMEWORK_DONE_PATTERN.search(raw))
     homework_skipped = bool(_HOMEWORK_SKIPPED_PATTERN.search(raw))
+    validate = bool(_VALIDATE_PATTERN.search(raw))
 
     cleaned = _BTN_PATTERN.sub("", raw)
     cleaned = _REMIND_PATTERN.sub("", cleaned)
@@ -60,6 +63,7 @@ def parse_reply(raw: str) -> ParsedReply:
     cleaned = _IDEA_DETECTED_PATTERN.sub("", cleaned)
     cleaned = _HOMEWORK_DONE_PATTERN.sub("", cleaned)
     cleaned = _HOMEWORK_SKIPPED_PATTERN.sub("", cleaned)
+    cleaned = _VALIDATE_PATTERN.sub("", cleaned)
     cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
     cleaned = cleaned.strip()
 
@@ -71,6 +75,7 @@ def parse_reply(raw: str) -> ParsedReply:
         idea_detected=idea_detected,
         homework_done=homework_done,
         homework_skipped=homework_skipped,
+        validate=validate,
     )
 
 

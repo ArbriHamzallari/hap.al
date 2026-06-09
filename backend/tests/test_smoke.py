@@ -1,4 +1,4 @@
-"""Phase 2a smoke tests. The engine itself is not exercised — Anthropic calls cost money."""
+"""Phase 2b smoke tests. The engine itself is not exercised — Anthropic calls cost money."""
 
 from __future__ import annotations
 
@@ -8,7 +8,8 @@ from typing import Any
 from fastapi.testclient import TestClient
 
 from app.conversation.context_builder import build_system_prompt
-from app.conversation.prompts import base_en, onboarding
+from app.conversation.prompts import base_en, base_sq, onboarding
+from app.conversation.prompts.base import get_base_module
 from app.database.models import Idea, User
 from app.main import app
 
@@ -21,6 +22,18 @@ def _user(**kwargs: Any) -> User:
     }
     base.update(kwargs)
     return User.model_validate(base)
+
+
+def _idea(**kwargs: Any) -> Idea:
+    base: dict[str, Any] = {
+        "id": "00000000-0000-0000-0000-000000000002",
+        "user_id": "00000000-0000-0000-0000-000000000001",
+        "title": "Coffee catering",
+        "description": "Catering for offices",
+        "current_stage": "exploring",
+    }
+    base.update(kwargs)
+    return Idea.model_validate(base)
 
 
 def test_health() -> None:
@@ -46,7 +59,13 @@ def test_onboarding_prompt_has_version() -> None:
 def test_system_prompt_for_new_user_includes_onboarding() -> None:
     prompt = build_system_prompt(_user(), history=[])
     assert onboarding.ONBOARDING_TASK in prompt
-    assert prompt.rstrip().endswith(base_en.ANTI_INJECTION)
+    assert prompt.rstrip().endswith(get_base_module("en").ANTI_INJECTION)
+
+
+def test_system_prompt_uses_albanian_base_for_sq_users() -> None:
+    prompt = build_system_prompt(_user(language="sq"), history=[])
+    assert "GJUHA" in prompt or "shqip" in prompt.lower()
+    assert prompt.rstrip().endswith(base_sq.ANTI_INJECTION)
     assert "## THEIR CURRENT IDEA" not in prompt
     assert "## PENDING HOMEWORK" not in prompt
 
@@ -61,14 +80,7 @@ def test_system_prompt_for_onboarded_user_uses_continuing_task() -> None:
 
 def test_system_prompt_includes_idea_when_present() -> None:
     user = _user(onboarding_complete=True)
-    idea = Idea(
-        id="00000000-0000-0000-0000-000000000002",
-        user_id=user.id,
-        title="Coffee catering",
-        description="Catering for offices",
-        current_stage="exploring",
-    )
-    prompt = build_system_prompt(user, history=[], idea=idea)
+    prompt = build_system_prompt(user, history=[], idea=_idea())
     assert "## THEIR CURRENT IDEA" in prompt
     assert "Coffee catering" in prompt
     assert "exploring" in prompt
@@ -88,12 +100,30 @@ def test_system_prompt_includes_pending_homework_section() -> None:
     prompt = build_system_prompt(user, history=[], pending_homework=pending)
     assert "## PENDING HOMEWORK" in prompt
     assert "Call 3 restaurants" in prompt
-    assert "HOMEWORK_DONE" in prompt  # the instruction line is in the section
+    assert "HOMEWORK_DONE" in prompt
 
 
 def test_pending_homework_section_omitted_when_empty() -> None:
     prompt = build_system_prompt(_user(), history=[], pending_homework=[])
     assert "## PENDING HOMEWORK" not in prompt
+
+
+def test_system_prompt_includes_validation_summary() -> None:
+    user = _user(onboarding_complete=True)
+    summary = (
+        "Two competitors found: TestCo (strong UX, weak pricing) and Acme (no edge)."
+    )
+    prompt = build_system_prompt(
+        user, history=[], idea=_idea(), validation_summary=summary
+    )
+    assert "Competitor landscape" in prompt
+    assert "TestCo" in prompt
+
+
+def test_validation_summary_only_shows_when_idea_present() -> None:
+    # No idea → no CURRENT IDEA block → no validation_summary either, even if passed.
+    prompt = build_system_prompt(_user(), history=[], validation_summary="ignored")
+    assert "Competitor landscape" not in prompt
 
 
 def test_about_user_hides_empty_fields() -> None:

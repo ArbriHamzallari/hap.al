@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 from datetime import UTC, datetime
-from typing import Any
+from typing import Any, cast
 
 from app.database.client import get_supabase
 
@@ -30,7 +30,7 @@ async def create_reminder(user_id: str, when: datetime, message: str) -> str:
             )
             .execute()
         )
-        return result.data[0]
+        return cast(list[dict[str, Any]], result.data)[0]
 
     row = await asyncio.to_thread(_insert)
     return str(row["id"])
@@ -51,7 +51,7 @@ async def list_due_reminders() -> list[dict[str, Any]]:
             .limit(_BATCH_LIMIT)
             .execute()
         )
-        return result.data
+        return cast(list[dict[str, Any]], result.data)
 
     return await asyncio.to_thread(_query)
 
@@ -80,7 +80,7 @@ async def list_pending(user_id: str, limit: int = _PENDING_LIST_LIMIT) -> list[d
             .limit(limit)
             .execute()
         )
-        return result.data
+        return cast(list[dict[str, Any]], result.data)
 
     return await asyncio.to_thread(_query)
 
@@ -108,7 +108,7 @@ async def mark_most_recent_sent_pending(user_id: str, new_status: str) -> dict[s
         )
         if not candidate.data:
             return None
-        row = candidate.data[0]
+        row = cast(dict[str, Any], candidate.data[0])
         client.table("homework").update({"status": new_status}).eq("id", row["id"]).execute()
         return row
 
