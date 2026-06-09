@@ -17,6 +17,9 @@ def test_no_markers() -> None:
     assert result.reminders == ()
     assert result.onboarding_done is False
     assert result.idea_detected is False
+    assert result.homework_done is False
+    assert result.homework_skipped is False
+    assert result.validate is False
 
 
 def test_button_marker_stripped() -> None:
@@ -94,14 +97,36 @@ def test_idea_detected_marker() -> None:
     assert "[IDEA_DETECTED]" not in result.text
 
 
+def test_homework_done_marker() -> None:
+    result = parse_reply("Nice work, that's huge.\n[HOMEWORK_DONE]")
+    assert result.homework_done is True
+    assert result.homework_skipped is False
+    assert "[HOMEWORK_DONE]" not in result.text
+
+
+def test_homework_skipped_marker() -> None:
+    result = parse_reply("No worries, life happens.\n[HOMEWORK_SKIPPED]")
+    assert result.homework_skipped is True
+    assert result.homework_done is False
+    assert "[HOMEWORK_SKIPPED]" not in result.text
+
+
+def test_validate_marker() -> None:
+    result = parse_reply("Alright, let me dig into this.\n[VALIDATE]")
+    assert result.validate is True
+    assert "[VALIDATE]" not in result.text
+
+
 def test_all_triggers_together() -> None:
     raw = (
         "Great, here's where we are.\n"
         "[ONBOARDING_DONE]\n"
         "[IDEA_DETECTED]\n"
+        "[VALIDATE]\n"
         "[REMIND:2026-06-01T10:00:00|Did you talk to anyone?]"
     )
     result = parse_reply(raw)
     assert result.onboarding_done is True
     assert result.idea_detected is True
+    assert result.validate is True
     assert len(result.reminders) == 1

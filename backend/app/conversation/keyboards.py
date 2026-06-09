@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
+Lang = Literal["en", "sq"]
 
 # callback_data -> label sent to the LLM as the user's answer
 CALLBACK_LABELS: dict[str, str] = {
@@ -76,19 +78,60 @@ _DAY_JOB = InlineKeyboardMarkup(
     ]
 )
 
-_KEYBOARDS: dict[str, InlineKeyboardMarkup] = {
+_KEYBOARDS_EN: dict[str, InlineKeyboardMarkup] = {
     "financial": _FINANCIAL,
     "experience": _EXPERIENCE,
     "time": _TIME,
     "day_job": _DAY_JOB,
 }
 
+_FINANCIAL_SQ = InlineKeyboardMarkup(
+    [
+        [InlineKeyboardButton("Situatë e ngurtë", callback_data="fin:tight")],
+        [InlineKeyboardButton("Komode", callback_data="fin:comfortable")],
+        [InlineKeyboardButton("Kam kursime", callback_data="fin:savings")],
+        [InlineKeyboardButton("Kam para investimi", callback_data="fin:investment")],
+    ]
+)
 
-def get_keyboard(key: str | None) -> InlineKeyboardMarkup | None:
+_EXPERIENCE_SQ = InlineKeyboardMarkup(
+    [
+        [InlineKeyboardButton("S'kam ndërtuar asgjë", callback_data="exp:none")],
+        [InlineKeyboardButton("Kam provuar 1-2 herë", callback_data="exp:beginner")],
+        [InlineKeyboardButton("Kam ndërtuar më parë", callback_data="exp:experienced")],
+    ]
+)
+
+_TIME_SQ = InlineKeyboardMarkup(
+    [
+        [InlineKeyboardButton("Pak orë/javë", callback_data="time:few")],
+        [InlineKeyboardButton("Me kohë të pjesshme", callback_data="time:part")],
+        [InlineKeyboardButton("Me kohë të plotë", callback_data="time:full")],
+    ]
+)
+
+_DAY_JOB_SQ = InlineKeyboardMarkup(
+    [
+        [InlineKeyboardButton("Po", callback_data="job:yes")],
+        [InlineKeyboardButton("Jo", callback_data="job:no")],
+        [InlineKeyboardButton("Freelance / i ndryshueshëm", callback_data="job:freelance")],
+    ]
+)
+
+_KEYBOARDS_SQ: dict[str, InlineKeyboardMarkup] = {
+    "financial": _FINANCIAL_SQ,
+    "experience": _EXPERIENCE_SQ,
+    "time": _TIME_SQ,
+    "day_job": _DAY_JOB_SQ,
+}
+
+
+def get_keyboard(key: str | None, lang: Lang = "en") -> InlineKeyboardMarkup | None:
     """Return the inline keyboard for a structured question, or None."""
     if key is None:
         return None
-    return _KEYBOARDS.get(key)
+    boards = _KEYBOARDS_SQ if lang == "sq" else _KEYBOARDS_EN
+    return boards.get(key)
 
 
 def label_for_callback(callback_data: str) -> str | None:

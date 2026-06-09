@@ -1,8 +1,5 @@
-from fastapi import FastAPI
+"""Compatibility entrypoint — delegates to FastAPI app in app.main."""
 
-app = FastAPI()
+from app.main import app
 
-
-@app.get("/")
-def health_check():
-    return {"status": "ok"}
+__all__ = ["app"]

@@ -44,6 +44,11 @@ class User(BaseModel):
     created_at: datetime | None = None
     last_active: datetime | None = None
 
+    # Not a DB column: True only on the call that just inserted the row. Used for the
+    # bot_started `is_new_user` analytics property. (created_at/last_active both default
+    # to NOW() in the schema, so they can't distinguish a fresh row from a returning one.)
+    is_new: bool = Field(default=False, exclude=True)
+
     _normalize_skills = field_validator("skills", mode="before")(_none_to_empty_list)
 
 

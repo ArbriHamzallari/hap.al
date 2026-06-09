@@ -1,0 +1,48 @@
+{
+  "non_text": "Right now I can only read text messages. Tell me what you'd like to talk about in writing?",
+  "errors": {
+    "generic": "Something went wrong on my end. Give me a moment and try again.",
+    "overloaded": "Anthropic's servers are at capacity right now — give me a couple of minutes and try again. This usually clears within 5-10 minutes.",
+    "rate_limit": "You're sending messages a bit fast — give me a moment and try again.",
+    "llm_daily_limit": "You've hit today's AI usage limit — come back tomorrow and we'll pick up where we left off.",
+    "llm_monthly_budget": "I'm at capacity for this month — try again in a few days."
+  },
+  "commands": {
+    "no_idea": "You haven't shared an idea with me yet. Tell me about it — what are you thinking?",
+    "no_homework": "No active homework right now. What's the next move?",
+    "no_progress": "No journey milestones yet. Once we work on tasks together, I'll track them here.",
+    "help": "Here's what I can do:\n/start — restart our conversation\n/myidea — show your current idea\n/newidea — archive the current idea and explore a new one\n/homework — list your pending tasks\n/progress — show your journey timeline\n/language — switch language (English / Shqip)\n/help — show this message\n\nOtherwise just text me normally. I remember everything across sessions and I'll ping you when we agree on a task.",
+    "language_prompt": "Pick your language:",
+    "language_set": "Got it — I'll write in {language} from here.",
+    "deletedata_confirm": "This permanently deletes all your data (profile, ideas, conversations, homework). Reply YES to confirm or anything else to cancel.",
+    "deletedata_done": "All your data has been deleted. Send /start if you want to begin fresh.",
+    "deletedata_cancel": "Cancelled — your data is still here.",
+    "idea_target": "Target customer:",
+    "idea_problem": "Problem:",
+    "idea_model": "Business model:",
+    "idea_edge": "Your edge:",
+    "idea_stage": "Stage:",
+    "idea_score": "Validation score:",
+    "idea_strengths": "Strengths:",
+    "idea_weaknesses": "Weaknesses:",
+    "idea_competitors": "Competitor landscape:",
+    "homework_header": "Your homework:",
+    "homework_awaiting": "awaiting your update",
+    "progress_header": "Your journey:"
+  },
+  "dates": {
+    "no_due": "no due date",
+    "due_now": "due now",
+    "due_in_min": "due in {n}m",
+    "due_in_hr": "due in {n}h",
+    "due_in_day": "due in {n}d",
+    "due_ago": "due {n}d ago"
+  },
+  "followup": {
+    "default_checkin": "Hey — checking in on the task we talked about. How did it go?"
+  },
+  "language_names": {
+    "en": "English",
+    "sq": "Shqip"
+  }
+}

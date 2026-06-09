@@ -1,13 +1,47 @@
 {
+  "lang": {
+    "en": "English",
+    "sq": "Shqip"
+  },
   "landing": {
     "title": "Hap — Bashkëthemeluesi yt personal",
-    "subtitle": "Një bot AI në Telegram që validon idenë tënde, të njeh si person dhe ndjek progresin tënd.",
-    "cta": "Fillo Tani — Falas"
+    "subtitle": "Bot AI në Telegram që validon idenë tënde, të njeh si person dhe të ndjek progresin.",
+    "cta": "Fillo Tani — Falas",
+    "howTitle": "Si funksionon",
+    "step1Title": "Shkruaj botit",
+    "step1Body": "Fillo në Telegram — pa regjistrim, pa forma. Flit si me një mik që kupton startup-et.",
+    "step2Title": "Të mëson ty",
+    "step2Body": "Hap pyet për aftësitë, situatën dhe frikërat — jo vetëm idenë — që këshilla të përshtatet me ty.",
+    "step3Title": "Të udhëzon në udhëtim",
+    "step3Body": "Merr feedback të sinqertë, validim me kërkim konkurrentësh real, detyra dhe kujtime kur afatet skadojnë.",
+    "trustFree": "Falas përgjithmonë",
+    "trustEncrypted": "Fushat sensitive të enkriptuara",
+    "trustNoSignup": "Pa regjistrim"
   },
   "privacy": {
-    "title": "Politika e Privatësisë"
+    "title": "Politika e Privatësisë",
+    "updated": "Përditësuar: maj 2026",
+    "intro": "Hap (hap.al) është një bot AI në Telegram për entrepreneurët në fillim. Kjo politikë shpjegon çfarë mbledhim dhe pse.",
+    "collectTitle": "Çfarë mbledhim",
+    "collectBody": "Të dhëna bazë nga Telegram (ID, username, emër), mesazhet me botin, përgjigjet e strukturuara, idetë, detyrat dhe ngjarjet e udhëtimit. Situata financiare, frikërat dhe shënimet e personalitetit enkriptohen para ruajtjes.",
+    "useTitle": "Si i përdorim",
+    "useBody": "Për bisedën, kujtesën ndër seanca, kujtesat për detyrat dhe analitikë të anonimizuar (ID të hash-uara — jo përmbajtje mesazhesh në analitikë).",
+    "deleteTitle": "Të drejtat e tua",
+    "deleteBody": "Dërgo /deletedata në bot për të fshirë përgjithmonë të gjitha të dhënat. Për pyetje, kontakto operatorin në hap.al.",
+    "lawTitle": "Baza ligjore",
+    "lawBody": "Përpunojmë të dhënat për të ofruar shërbimin që kërkon duke shkruar botit. Respektojmë parimet GDPR dhe Ligjin 9887 të Shqipërisë."
   },
   "terms": {
-    "title": "Kushtet e Shërbimit"
+    "title": "Kushtet e Shërbimit",
+    "updated": "Përditësuar: maj 2026",
+    "intro": "Duke përdorur botin Hap në Telegram, pranon këto kushte.",
+    "serviceTitle": "Shërbimi",
+    "serviceBody": "Hap ofron udhëzim entrepreneurial me AI. Nuk është këshillë ligjore, tatimore apo investimi. Konsulto profesionistë për ato vendime.",
+    "acceptableTitle": "Përdorimi i pranueshëm",
+    "acceptableBody": "Mos abuzo botin, mos provo të nxjerrësh prompt-et e sistemit, mos dërgo përmbajtje ilegale. Mund të kufizojmë shpejtësinë ose të bllokojmë abuzimin.",
+    "liabilityTitle": "Përgjegjësia",
+    "liabilityBody": "Shërbimi ofrohet siç është. Ti je përgjegjës për vendimet që merr bazuar në bisedat me Hap.",
+    "changesTitle": "Ndryshimet",
+    "changesBody": "Mund t'i përditësojmë këto kushte. Përdorimi i vazhdueshëm pas ndryshimeve do të thotë pranim."
   }
 }

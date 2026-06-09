@@ -1,0 +1,48 @@
+{
+  "non_text": "Për momentin lexoj vetëm mesazhe me tekst. Më shkruaj me shkrim çfarë do të flasim?",
+  "errors": {
+    "generic": "Diçka shkoi keq nga ana ime. Më jep një moment dhe provo përsëri.",
+    "overloaded": "Serverët e Anthropic janë të mbingarkuar — provo përsëri pas disa minutash. Zakonisht zgjidhet brenda 5-10 minutash.",
+    "rate_limit": "Po më dërgon mesazhe shumë shpejt — më jep një moment dhe provo përsëri.",
+    "llm_daily_limit": "Ke arritur limitin e përdorimit për sot — kthehu nesër dhe vazhdojmë.",
+    "llm_monthly_budget": "Jam në kapacitet maksimal për këtë muaj — provo përsëri pas disa ditësh."
+  },
+  "commands": {
+    "no_idea": "Nuk ke ndarë ende një ide me mua. Më trego — çfarë ke në mendje?",
+    "no_homework": "Nuk ke detyra aktive tani. Cili është hapi tjetër?",
+    "no_progress": "Ende nuk ka momente në udhëtimin tënd. Kur punojmë së bashku, do t'i ndjek këtu.",
+    "help": "Ja çfarë mund të bëj:\n/start — rifillojmë bisedën\n/myidea — ideja aktuale\n/newidea — arkivoj idejen dhe eksplorojmë një të re\n/homework — detyrat në pritje\n/progress — kronologjia e udhëtimit\n/language — ndërro gjuhën (English / Shqip)\n/help — ky mesazh\n\nPërndryshe më shkruaj normalisht. Mbaj mend gjithçka dhe të kujtoj kur biem dakord për një detyrë.",
+    "language_prompt": "Zgjidh gjuhën:",
+    "language_set": "Në rregull — nga tani shkruaj në {language}.",
+    "deletedata_confirm": "Kjo fshin përgjithmonë të gjitha të dhënat (profili, idetë, bisedat, detyrat). Përgjigju PO për të konfirmuar, ndryshe anulon.",
+    "deletedata_done": "Të gjitha të dhënat u fshinë. Dërgo /start nëse do të fillosh nga e para.",
+    "deletedata_cancel": "Anuluar — të dhënat mbeten.",
+    "idea_target": "Klienti i synuar:",
+    "idea_problem": "Problemi:",
+    "idea_model": "Modeli i biznesit:",
+    "idea_edge": "Avantazhi yt:",
+    "idea_stage": "Faza:",
+    "idea_score": "Pikët e validimit:",
+    "idea_strengths": "Pikat e forta:",
+    "idea_weaknesses": "Dobësitë:",
+    "idea_competitors": "Konkurrenca:",
+    "homework_header": "Detyrat e tua:",
+    "homework_awaiting": "në pritje të përgjigjes tënde",
+    "progress_header": "Udhëtimi yt:"
+  },
+  "dates": {
+    "no_due": "pa afat",
+    "due_now": "tani",
+    "due_in_min": "pas {n}min",
+    "due_in_hr": "pas {n}orësh",
+    "due_in_day": "pas {n} ditësh",
+    "due_ago": "{n} ditë më parë"
+  },
+  "followup": {
+    "default_checkin": "Hej — po të kontrolloj për detyrën që folëm. Si shkoi?"
+  },
+  "language_names": {
+    "en": "English",
+    "sq": "Shqip"
+  }
+}

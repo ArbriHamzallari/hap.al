@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     # Telegram
     telegram_bot_token: SecretStr
     telegram_webhook_secret: SecretStr | None = None
+    telegram_webhook_url: str | None = None
 
     # LLM
     anthropic_api_key: SecretStr
@@ -28,6 +29,11 @@ class Settings(BaseSettings):
     # Security
     telegram_id_hash_salt: SecretStr
     encryption_key: SecretStr
+    internal_cron_secret: SecretStr | None = None
+    rate_limit_per_minute: int = 20
+    rate_limit_per_day: int = 200
+    llm_daily_call_limit: int = 50
+    monthly_budget_cap_usd: float = 50.0
 
     # Observability
     sentry_dsn: str = ""
@@ -51,6 +57,25 @@ class Settings(BaseSettings):
                 "print(Fernet.generate_key().decode())'"
             ) from e
         return v
+
+
+def validate_production_settings(settings: Settings) -> None:
+    """Fail fast when production is misconfigured (webhook + cron required)."""
+    if settings.app_env != "production":
+        return
+
+    errors: list[str] = []
+    if settings.use_polling:
+        errors.append("USE_POLLING must be false in production")
+    if settings.telegram_webhook_secret is None:
+        errors.append("TELEGRAM_WEBHOOK_SECRET is required in production")
+    if not settings.telegram_webhook_url:
+        errors.append("TELEGRAM_WEBHOOK_URL is required in production")
+    if settings.internal_cron_secret is None:
+        errors.append("INTERNAL_CRON_SECRET is required in production")
+
+    if errors:
+        raise RuntimeError("Production misconfiguration: " + "; ".join(errors))
 
 
 def get_settings() -> Settings:
