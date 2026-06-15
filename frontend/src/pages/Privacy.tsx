@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import LanguageToggle from '../shared/components/LanguageToggle'
+import Header from '../shared/components/Header'
+import Footer from '../shared/components/Footer'
+import Container from '../shared/components/Container'
 
 export default function Privacy() {
   const { t } = useTranslation()
@@ -12,24 +14,28 @@ export default function Privacy() {
   ]
 
   return (
-    <main className="min-h-screen bg-neutral-50 px-6 py-10 dark:bg-neutral-950 dark:text-neutral-100">
-      <div className="mx-auto max-w-2xl">
-        <div className="mb-8 flex items-center justify-between">
-          <Link to="/" className="text-sm text-orange-500 hover:underline">
-            ← Hap
+    <div className="grid-bg min-h-screen">
+      <Header />
+      <main className="section-padding">
+        <Container className="max-w-2xl">
+          <Link
+            to="/"
+            className="focus-ring text-sm text-accent transition hover:text-white"
+          >
+            ← HAP AI
           </Link>
-          <LanguageToggle />
-        </div>
-        <h1 className="text-3xl font-semibold">{t('privacy.title')}</h1>
-        <p className="mt-2 text-sm text-neutral-500">{t('privacy.updated')}</p>
-        <p className="mt-6 text-neutral-700 dark:text-neutral-300">{t('privacy.intro')}</p>
-        {sections.map((s) => (
-          <section key={s.title} className="mt-8">
-            <h2 className="text-xl font-medium">{s.title}</h2>
-            <p className="mt-2 text-neutral-700 dark:text-neutral-300">{s.body}</p>
-          </section>
-        ))}
-      </div>
-    </main>
+          <h1 className="font-heading mt-10 text-3xl font-semibold text-white">{t('privacy.title')}</h1>
+          <p className="mt-3 text-sm text-muted">{t('privacy.updated')}</p>
+          <p className="mt-8 leading-relaxed text-muted">{t('privacy.intro')}</p>
+          {sections.map((s) => (
+            <section key={s.title} className="mt-12">
+              <h2 className="font-heading text-xl font-semibold text-white">{s.title}</h2>
+              <p className="mt-3 leading-relaxed text-muted">{s.body}</p>
+            </section>
+          ))}
+        </Container>
+      </main>
+      <Footer />
+    </div>
   )
 }

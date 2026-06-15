@@ -3,27 +3,415 @@
     "en": "English",
     "sq": "Shqip"
   },
+  "nav": {
+    "launch": "Hap në Telegram"
+  },
   "landing": {
-    "title": "Hap — Bashkëthemeluesi yt personal",
-    "subtitle": "Bot AI në Telegram që validon idenë tënde, të njeh si person dhe të ndjek progresin.",
-    "cta": "Fillo Tani — Falas",
-    "howTitle": "Si funksionon",
-    "step1Title": "Shkruaj botit",
-    "step1Body": "Fillo në Telegram — pa regjistrim, pa forma. Flit si me një mik që kupton startup-et.",
-    "step2Title": "Të mëson ty",
-    "step2Body": "Hap pyet për aftësitë, situatën dhe frikërat — jo vetëm idenë — që këshilla të përshtatet me ty.",
-    "step3Title": "Të udhëzon në udhëtim",
-    "step3Body": "Merr feedback të sinqertë, validim me kërkim konkurrentësh real, detyra dhe kujtime kur afatet skadojnë.",
-    "trustFree": "Falas përgjithmonë",
-    "trustEncrypted": "Fushat sensitive të enkriptuara",
-    "trustNoSignup": "Pa regjistrim"
+    "badge": "Për themelues, freelancerë dhe ndërtues",
+    "headline1": "Idetë janë të lehta.",
+    "headline2": "Ekzekutimi është gjithçka.",
+    "subheadline": "HAP AI sfidon idetë e tua, krijon plane ekzekutimi, cakton detyra ditore dhe të mban përgjegjës përmes Telegram-it që të bësh progres real.",
+    "heroSupport": "Jo ChatGPT. HAP jeton në inbox-in tënd në Telegram — shtyn kundër ideve të dobëta, të jep një detyrë në ditë dhe të ndjek kur humb afatin.",
+    "ctaPrimary": "Fillo në Telegram — Falas",
+    "ctaSecondary": "Shiko çfarë bën HAP",
+    "heroChat": {
+      "sender": "HAP AI",
+      "line1": "Audienca jote është shumë e gjerë.",
+      "line2": "Zgjidh një niche. Sot.",
+      "taskLabel": "Detyra e sotme",
+      "task": "Intervisto 3 klientë potencialë.",
+      "deadlineLabel": "Afati",
+      "deadline": "20:00"
+    },
+    "problem": {
+      "headline": "ChatGPT mbyll bisedën. HAP fillon punën.",
+      "genericAi": {
+        "title": "ChatGPT",
+        "line1": "\"Ide e shkëlqyer!\"",
+        "line2": "Ja një plan me 12 hapa që nuk do ta ndjekësh kurrë."
+      },
+      "consultants": {
+        "title": "Këshilltarë startup-i",
+        "line1": "5 mijë dollarë për një slide deck.",
+        "line2": "Zero ndjekje. Zero përgjegjësi."
+      },
+      "hap": {
+        "title": "HAP AI",
+        "line1": "Tregu yt është shumë i gjerë.",
+        "line2": "Flit me 5 klientë këtë javë.",
+        "line3": "Do të kontrolloj të premten."
+      }
+    },
+    "howItWorks": {
+      "title": "Si funksionon HAP",
+      "step1": {
+        "title": "Shkruaj HAP-it në Telegram",
+        "body": "Thuaji idenë në gjuhë normale. Pa regjistrim, pa forma, pa app të ri. Të takon aty ku tashmë shkruan çdo ditë."
+      },
+      "step2": {
+        "title": "Merr idenë të testuar",
+        "body": "HAP shtyn kundër tregjeve të vagëta, supozimeve të patestuara dhe ideve që tingëllojnë mirë por nuk sjellin para. ChatGPT rrallë të thotë jo. HAP do."
+      },
+      "step3": {
+        "title": "Merr një plan që mund ta ndjekësh",
+        "body": "Jo një dokument me 40 pika — një plan i shkurtër në faza: validim, klientë, ndërtim, lansim. Përshtatur me kohën dhe situatën tënde."
+      },
+      "step4": {
+        "title": "Bëj një detyrë. Çdo ditë.",
+        "body": "Një veprim specifik me afat. Intervisto një klient. Hiq një feature. Dërgo 5 email. HAP të ndjek nëse nuk raporton."
+      },
+      "step5": {
+        "title": "Dërgo diçka reale",
+        "body": "Javë pas jave, detyrat bëhen rezultate — ide e validuar, klient që paguan, produkt live. HAP ndjek progresin dhe të kujton kur devijon."
+      }
+    },
+    "whatHapDoes": {
+      "title": "Çfarë bën HAP AI në praktikë",
+      "subtitle1": "Jo një chatbot tjetër.",
+      "subtitle2": "Një sistem i ndërtuar për të të ndihmuar të bësh progres real.",
+      "cards": {
+        "challenge": {
+          "title": "Sfidon idetë e dobëta",
+          "body": "HAP AI nuk pajtohet automatikisht me çdo ide. Identifikon rreziqet, supozimet e dobëta, tregjet e ngjeshura dhe planet jo-realiste para se të humbësh kohë duke ndërtuar."
+        },
+        "plans": {
+          "title": "Krijon plane ekzekutimi",
+          "body": "Kthe një ide të vagë në një plan të qartë me prioritete, milestone dhe hapa konkretë. Gjithmonë di çfarë të punosh më pas."
+        },
+        "tasks": {
+          "title": "Cakton detyra ditore",
+          "body": "Merr detyra konkrete direkt në Telegram. Çdo detyrë e lëviz biznesin përpara. Pa punë të kotë. Pa planifikim të pafund."
+        },
+        "accountability": {
+          "title": "Të mban përgjegjës",
+          "body": "HAP AI ndjek progresin, kontrollon nëse detyrat u kryen dhe ndihmon të ruash momentumin me kalimin e kohës. Qëllimi është ekzekutim i vazhdueshëm."
+        }
+      }
+    },
+    "journey": {
+      "title": "Detyra reale. Jo këshilla gjenerike.",
+      "subtitle": "Zgjidh një fazë për të parë çfarë cakton HAP. Kështu duket përgjegjësia.",
+      "stages": {
+        "idea": {
+          "label": "Ide",
+          "tasks": [
+            "Shkruaj idenë në një fjali: kush paguan, për çfarë, dhe pse tani.",
+            "Listo 3 supozime mbi të cilat po baston — pa prova ende.",
+            "Emërto 2 persona realë me të cilët do të flasësh para fundit të javës."
+          ]
+        },
+        "validation": {
+          "label": "Validim",
+          "tasks": [
+            "Intervisto 5 klientë potencialë. Dëgjo — mos bëj pitch.",
+            "Shkruaj 3 problemet kryesore që përmendën realisht.",
+            "Vendos: pivot, vazhdo, ose lëre. Pa gjysmë-rrugë."
+          ]
+        },
+        "customers": {
+          "label": "Klientë",
+          "tasks": [
+            "Përcakto 10 klientët e parë — me emër ose segment të saktë.",
+            "Shkruaju 5 me një pyetje specifike. Jo pitch shitjeje.",
+            "Rezervo 2 thirrje para të premtes. Raporto çfarë mësove."
+          ]
+        },
+        "mvp": {
+          "label": "MVP",
+          "tasks": [
+            "Ul listën e features tek ajo që zgjidh problemin kryesor.",
+            "Vendos datë lansimi — max 2 javë. Thuaji HAP-it.",
+            "Ndërto vetëm sa duhet për të testuar nëse dikush do të paguajë."
+          ]
+        },
+        "launch": {
+          "label": "Lansim",
+          "tasks": [
+            "Vendose para 10 përdoruesve realë këtë javë.",
+            "Mblidh feedback me shkrim — çfarë funksionoi, çfarë jo.",
+            "Rregullo pengesën #1. Mos shto features ende."
+          ]
+        },
+        "growth": {
+          "label": "Rritje",
+          "tasks": [
+            "Gjej një person që paguan. Vetëm një.",
+            "Zbuloni si të gjetën ty. Bëj më shumë nga ajo.",
+            "Vendos objektiv javor të të ardhurave. Raporto te HAP."
+          ]
+        }
+      }
+    },
+    "telegram": {
+      "title": "Pse Telegram — jo një app tjetër",
+      "subtitle": "Nuk të duhet një dashboard që harron ta hapësh. HAP të shkruan direkt, të ndjek për detyrat e humbura dhe mban presionin — në app-in që kontrollon 50 herë në ditë.",
+      "conv1": {
+        "line1": "Nuk ke folur me një klient këtë javë.",
+        "line2": "Çfarë të pengoi?"
+      },
+      "conv2": {
+        "line1": "MVP-ja po zgjat shumë.",
+        "line2": "Hiq 2 features.",
+        "line3": "Dërgo deri të premten. Do të pyes."
+      },
+      "conv3": {
+        "line1": "Mirë. Dërgove.",
+        "line2": "Tani gjej një person që paguan."
+      }
+    },
+    "principles": {
+      "title": "Pse themeluesit zgjedhin HAP në vend të ChatGPT",
+      "noFake": {
+        "title": "Nuk gënjen për të të bërë të lumtur",
+        "body": "ChatGPT do të jetë i dobishëm — prandaj pajtohet me ty. HAP të thotë kur idea ka vrima, tregu është shumë i gjerë, ose po shmang punën e vështirë."
+      },
+      "execution": {
+        "title": "Detyra, jo ese",
+        "body": "ChatGPT të jep plane. HAP të jep një gjë për sot, me afat. Planifikimi duket produktiv. Dërgimi është produktiv."
+      },
+      "focus": {
+        "title": "Kujton dhe të ndjek",
+        "body": "ChatGPT harron që ekziston midis seancave. HAP kujton idenë, pengesat dhe afatet e humbura — dhe i sjell përsëri."
+      },
+      "momentum": {
+        "title": "Përgjegjësia është produkti",
+        "body": "Shumica e themeluesve nuk dështojnë nga idetë e këqija. Dështojnë sepse nuk e bëjnë punën. HAP ekziston që të sigurojë që të shfaqesh — çdo ditë, në Telegram."
+      }
+    },
+    "finalCta": {
+      "headline1": "Ndalo planifikimin.",
+      "headline2": "Fillo të bësh.",
+      "button": "Hap HAP në Telegram"
+    },
+    "story": {
+      "storyTitle": "Si funksionon HAP AI brenda Telegram-it",
+      "contrast": {
+        "eyebrow": "Pse jo thjesht ChatGPT?",
+        "them": "ChatGPT pajtohet me ty.",
+        "us": "HAP të mban përgjegjës."
+      },
+      "hero": {
+        "eyebrow": "Bashkëthemelues AI në Telegram",
+        "headline1": "Idetë janë të lehta.",
+        "headline2": "Ekzekutimi është gjithçka.",
+        "subheadline": "HAP është bashkëthemeluesi që sfidon idenë tënde, të jep një detyrë të qartë në çdo hap dhe të ndjek derisa ta mbarosh.",
+        "ctaSecondary": "Shiko si funksionon",
+        "trust": "Falas · Pa regjistrim · EN & SQ",
+        "betaBadge": "Beta · Falas gjatë beta-s",
+        "phone": {
+          "label": "AI cofounder",
+          "title": "Sot",
+          "messages": [
+            {
+              "role": "hap",
+              "text": "Audienca jote është shumë e gjerë.",
+              "meta": "09:41"
+            },
+            {
+              "role": "hap",
+              "text": "Zgjidh një niche specifike para nesër.",
+              "meta": "09:41"
+            },
+            {
+              "role": "system",
+              "text": "Detyra e sotme"
+            },
+            {
+              "role": "hap",
+              "text": "Intervisto 5 klientë potencialë.",
+              "meta": "Afati: e premte"
+            },
+            {
+              "role": "user",
+              "text": "Ok, po merrem me këtë."
+            }
+          ],
+          "footer": "Shkruaji HAP-it në Telegram"
+        }
+      },
+      "problem": {
+        "eyebrow": "Pika reale ku dështojnë",
+        "headline": "Themeluesit rrallë dështojnë nga mungesa idesh.",
+        "accent": "Dështojnë sepse askush nuk i bën të ekzekutojnë.",
+        "sub": "Vetëm ekzekutimi grumbullohet me kohën. HAP ekziston ta bëjë realitet."
+      },
+      "scrolly": {
+        "challenge": {
+          "eyebrow": "sfidë",
+          "headline": "Së pari, HAP të kundërshton.",
+          "body": "Jo lavdërim automatik. HAP kërkon supozime të dobëta, klientë të paqartë dhe plane që duken produktive por shmangin tregun."
+        },
+        "plan": {
+          "eyebrow": "plan",
+          "headline": "Pastaj ngushton lëvizjen tjetër.",
+          "body": "Përgjigjja nuk është dokument strategjie. Është veprimi më i vogël që mund ta provojë ose ta rrëzojë idenë."
+        },
+        "task": {
+          "eyebrow": "detyrë",
+          "headline": "Detyra vjen në Telegram.",
+          "body": "Specifike. Me afat. E vështirë për t'u shmangur. Telefoni bëhet vendi ku startup-i lëviz realisht."
+        },
+        "followup": {
+          "eyebrow": "ndjekje",
+          "headline": "Momentumi kontrollohet.",
+          "body": "Kur kalon afati, HAP pyet çfarë ndodhi dhe vendos hapin tjetër bashkë me ty."
+        }
+      },
+      "phoneScreens": [
+        {
+          "label": "sfidë",
+          "title": "Rishikim ideje",
+          "messages": [
+            {
+              "role": "user",
+              "text": "Dua të ndërtoj një app për studentë."
+            },
+            {
+              "role": "hap",
+              "text": "Shumë e gjerë. Cilët studentë e kanë këtë problem aq fort sa të veprojnë këtë javë?"
+            },
+            {
+              "role": "hap",
+              "text": "Emërto 10 personat e parë që mund t'i kontaktosh."
+            }
+          ],
+          "footer": "Idetë e dobëta mprehen."
+        },
+        {
+          "label": "plan ekzekutimi",
+          "title": "Këtë javë",
+          "messages": [
+            {
+              "role": "hap",
+              "text": "Ke kaluar dy javë duke planifikuar."
+            },
+            {
+              "role": "hap",
+              "text": "Fol me pesë klientë këtë javë."
+            },
+            {
+              "role": "system",
+              "text": "Afati: e premte"
+            },
+            {
+              "role": "user",
+              "text": "Çfarë duhet t'i pyes?"
+            },
+            {
+              "role": "hap",
+              "text": "Pyeti kur ky problem u kushtoi kohë, para ose reputacion."
+            }
+          ],
+          "footer": "Një lëvizje në çdo moment."
+        },
+        {
+          "label": "përgjegjësi",
+          "title": "Check-in të premten",
+          "messages": [
+            {
+              "role": "hap",
+              "text": "Fole me pesë klientë?"
+            },
+            {
+              "role": "user",
+              "text": "Done."
+            },
+            {
+              "role": "hap",
+              "text": "Mirë. Çfarë të surprizoi?"
+            },
+            {
+              "role": "user",
+              "text": "U intereson shpejtësia, jo çmimi."
+            }
+          ],
+          "footer": "Progresi bëhet kontekst."
+        },
+        {
+          "label": "hapi tjetër",
+          "title": "Pas validimit",
+          "messages": [
+            {
+              "role": "hap",
+              "text": "Tani gjej klientin e parë që paguan."
+            },
+            {
+              "role": "hap",
+              "text": "Dërgo një ofertë pilot me pagesë para orës 18:00."
+            },
+            {
+              "role": "system",
+              "text": "Rruga drejt launch u përditësua"
+            }
+          ],
+          "footer": "Ekzekutimi grumbullohet."
+        }
+      ],
+      "what": {
+        "eyebrow": "Çfarë bën HAP",
+        "challenge": "Sfidon idetë e dobëta.",
+        "plans": "Planifikon hapin tënd të radhës.",
+        "tasks": "Cakton detyra me afate.",
+        "accountability": "Të mban përgjegjës.",
+        "kicker": "Gjithçka ndodh në një bisedë të vetme në Telegram."
+      },
+      "journey": {
+        "eyebrow": "Rruga e themeluesit",
+        "title": "Nga mendim në traction.",
+        "idea": "Ide",
+        "validation": "Validim",
+        "customers": "Klientë",
+        "mvp": "MVP",
+        "launch": "Lansim"
+      },
+      "journeyNotes": {
+        "idea": "Testo klientin dhe dhimbjen.",
+        "validation": "Fol me tregun para se të ndërtosh.",
+        "customers": "Gjej njerëzit e parë që mund të paguajnë.",
+        "mvp": "Hiq scope derisa premtimi kryesor të testohet.",
+        "launch": "Vendose para përdoruesve realë dhe raporto."
+      },
+      "final": {
+        "headline1": "Startup-i yt nuk ka nevojë për motivim.",
+        "headline2": "Ka nevojë për momentum.",
+        "sub": "Falas për të nisur. HAP përgjigjet në sekonda dhe kujton idenë dhe progresin tënd.",
+        "button": "Fillo në Telegram — Falas"
+      },
+      "beta": {
+        "eyebrow": "Aktualisht në beta",
+        "headline": "HAP AI përmirësohet çdo javë.",
+        "body": "Çdo bisedë ndihmon të përmirësohet analiza e ideve, planifikimi i ekzekutimit dhe përgjegjshmëria. Ja saktësisht çfarë funksionon sot — dhe çfarë vjen më pas.",
+        "availableTitle": "E disponueshme sot",
+        "available": [
+          "Reagim i sinqertë ndaj ideve — pa lavdërim automatik",
+          "Validim ideje me kërkim real të konkurrentëve",
+          "Udhëzim për hapin tënd të radhës",
+          "Detyra me afate, dërguar në Telegram",
+          "Ndjekje për përgjegjshmëri kur kalon afati",
+          "Kujton idenë dhe progresin tënd ndër seanca",
+          "Dygjuhësh — Anglisht & Shqip"
+        ],
+        "comingTitle": "Vjen më pas",
+        "coming": [
+          "Panel progresi brenda Telegram-it",
+          "Kujtesë më e gjatë me përmbledhje bisedash",
+          "Rishikime javore për themeluesit",
+          "Histori e pikëzimit të validimit me kohën",
+          "Ndjekje më e zgjuar që përshtatet me progresin tënd",
+          "Onboarding i plotë në shqip"
+        ]
+      }
+    },
+    "footer": {
+      "tagline": "Bashkëthemeluesi që të mban përgjegjës — në Telegram."
+    }
   },
   "privacy": {
     "title": "Politika e Privatësisë",
     "updated": "Përditësuar: maj 2026",
-    "intro": "Hap (hap.al) është një bot AI në Telegram për entrepreneurët në fillim. Kjo politikë shpjegon çfarë mbledhim dhe pse.",
+    "intro": "HAP AI (hap.al) është një bot Telegram për themelues që ndërtojnë startup-e. Kjo politikë shpjegon çfarë mbledhim dhe pse.",
     "collectTitle": "Çfarë mbledhim",
-    "collectBody": "Të dhëna bazë nga Telegram (ID, username, emër), mesazhet me botin, përgjigjet e strukturuara, idetë, detyrat dhe ngjarjet e udhëtimit. Situata financiare, frikërat dhe shënimet e personalitetit enkriptohen para ruajtjes.",
+    "collectBody": "Të dhëna bazë nga Telegram (ID, username, emër), mesazhet me botin, përgjigjet e strukturuara, idetë, detyrat e caktuara dhe ngjarjet e progresit. Situata financiare, frikërat dhe shënimet e personalitetit enkriptohen para ruajtjes.",
     "useTitle": "Si i përdorim",
     "useBody": "Për bisedën, kujtesën ndër seanca, kujtesat për detyrat dhe analitikë të anonimizuar (ID të hash-uara — jo përmbajtje mesazhesh në analitikë).",
     "deleteTitle": "Të drejtat e tua",
@@ -34,13 +422,13 @@
   "terms": {
     "title": "Kushtet e Shërbimit",
     "updated": "Përditësuar: maj 2026",
-    "intro": "Duke përdorur botin Hap në Telegram, pranon këto kushte.",
+    "intro": "Duke përdorur HAP AI në Telegram, pranon këto kushte.",
     "serviceTitle": "Shërbimi",
-    "serviceBody": "Hap ofron udhëzim entrepreneurial me AI. Nuk është këshillë ligjore, tatimore apo investimi. Konsulto profesionistë për ato vendime.",
+    "serviceBody": "HAP ofron udhëzim entrepreneurial dhe përgjegjësi përmes bisedës. Nuk është këshillë ligjore, tatimore apo investimi. Konsulto profesionistë për ato vendime.",
     "acceptableTitle": "Përdorimi i pranueshëm",
     "acceptableBody": "Mos abuzo botin, mos provo të nxjerrësh prompt-et e sistemit, mos dërgo përmbajtje ilegale. Mund të kufizojmë shpejtësinë ose të bllokojmë abuzimin.",
     "liabilityTitle": "Përgjegjësia",
-    "liabilityBody": "Shërbimi ofrohet siç është. Ti je përgjegjës për vendimet që merr bazuar në bisedat me Hap.",
+    "liabilityBody": "Shërbimi ofrohet siç është. Ti je përgjegjës për vendimet që merr bazuar në bisedat me HAP.",
     "changesTitle": "Ndryshimet",
     "changesBody": "Mund t'i përditësojmë këto kushte. Përdorimi i vazhdueshëm pas ndryshimeve do të thotë pranim."
   }
