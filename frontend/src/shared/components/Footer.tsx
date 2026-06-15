@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Container from './Container'
-import { useBotUrl } from '../hooks/useBotUrl'
+import { openTelegramBot, useBotUrl } from '../telegramBot'
 
 export default function Footer() {
   const { t } = useTranslation()
@@ -24,8 +24,10 @@ export default function Footer() {
           <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted">
             <a
               href={botUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={(event) => {
+                event.preventDefault()
+                openTelegramBot()
+              }}
               className="focus-ring transition-colors hover:text-white"
             >
               {t('nav.launch')}

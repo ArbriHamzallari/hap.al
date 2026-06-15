@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react'
+import type { MouseEvent, ReactNode } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { buttonHover, buttonTap } from '../motion/presets'
+import { openTelegramBot } from '../telegramBot'
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost'
 
@@ -8,6 +9,8 @@ type ButtonProps = {
   children: ReactNode
   variant?: ButtonVariant
   href?: string
+  /** Try tg:// on mobile, then fall back to the href web URL. */
+  telegramBot?: boolean
   onClick?: () => void
   className?: string
 }
@@ -24,6 +27,7 @@ export default function Button({
   children,
   variant = 'primary',
   href,
+  telegramBot = false,
   onClick,
   className = '',
 }: ButtonProps) {
@@ -40,11 +44,20 @@ export default function Button({
       }
 
   if (href) {
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+      if (telegramBot) {
+        event.preventDefault()
+        openTelegramBot()
+      }
+      onClick?.()
+    }
+
     return (
       <motion.a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={telegramBot ? undefined : '_blank'}
+        rel={telegramBot ? undefined : 'noopener noreferrer'}
+        onClick={telegramBot || onClick ? handleClick : undefined}
         className={classes}
         {...motionProps}
       >

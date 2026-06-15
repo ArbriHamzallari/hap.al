@@ -1,3 +1,1 @@
-export function useBotUrl(): string {
-  return import.meta.env.VITE_TELEGRAM_BOT_URL ?? 'https://t.me/hap_prod_bot'
-}
+export { TELEGRAM_BOT_WEB_URL, openTelegramBot, useBotUrl } from '../telegramBot'

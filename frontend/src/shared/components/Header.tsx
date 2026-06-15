@@ -36,7 +36,9 @@ export default function Header() {
         <div className="flex items-center gap-3 sm:gap-4">
           <LanguageToggle />
           <span className="hidden sm:inline-flex">
-            <Button href={botUrl}>{t('nav.launch')}</Button>
+            <Button href={botUrl} telegramBot>
+              {t('nav.launch')}
+            </Button>
           </span>
         </div>
       </div>
