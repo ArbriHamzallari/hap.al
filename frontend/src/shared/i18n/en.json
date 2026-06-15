@@ -3,29 +3,417 @@
     "en": "English",
     "sq": "Shqip"
   },
+  "nav": {
+    "launch": "Open in Telegram"
+  },
   "landing": {
-    "title": "Hap — Your personal co-founder",
-    "subtitle": "An AI Telegram bot that validates your idea, knows you as a person, and follows up on your progress.",
-    "cta": "Start Now — Free",
-    "howTitle": "How it works",
-    "step1Title": "Text the bot",
-    "step1Body": "Start on Telegram — no signup, no forms. Just talk like you would with a friend who gets startups.",
-    "step2Title": "It learns about you",
-    "step2Body": "Hap asks about your skills, situation, and fears — not just your idea — so advice fits who you actually are.",
-    "step3Title": "It guides your journey",
-    "step3Body": "Get honest pushback, validation with real competitor research, homework, and check-ins when tasks are due.",
-    "trustFree": "Free forever",
-    "trustEncrypted": "Sensitive fields encrypted at rest",
-    "trustNoSignup": "No sign-up required"
+    "badge": "For founders, freelancers, and builders",
+    "headline1": "Ideas are easy.",
+    "headline2": "Execution is everything.",
+    "subheadline": "HAP AI challenges your ideas, creates execution plans, assigns daily tasks, and keeps you accountable through Telegram so you actually make progress.",
+    "heroSupport": "Not ChatGPT. HAP lives in your Telegram inbox — it pushes back on weak ideas, gives you one task per day, and follows up when you miss deadlines.",
+    "ctaPrimary": "Start on Telegram — Free",
+    "ctaSecondary": "See what HAP does",
+    "heroChat": {
+      "sender": "HAP AI",
+      "line1": "Your target audience is too broad.",
+      "line2": "Pick one niche. Today.",
+      "taskLabel": "Today's task",
+      "task": "Interview 3 potential customers.",
+      "deadlineLabel": "Due",
+      "deadline": "20:00"
+    },
+    "problem": {
+      "headline": "ChatGPT ends the conversation. HAP starts the work.",
+      "genericAi": {
+        "title": "ChatGPT",
+        "line1": "\"That's a great idea!\"",
+        "line2": "Here's a 12-step plan you'll never follow."
+      },
+      "consultants": {
+        "title": "Startup advisors",
+        "line1": "$5K for a slide deck.",
+        "line2": "Zero follow-up. Zero accountability."
+      },
+      "hap": {
+        "title": "HAP AI",
+        "line1": "Your market is too broad.",
+        "line2": "Talk to 5 customers this week.",
+        "line3": "I'll check in Friday."
+      }
+    },
+    "howItWorks": {
+      "title": "How HAP works",
+      "step1": {
+        "title": "Message HAP on Telegram",
+        "body": "Tell it your idea in plain language. No signup, no forms, no new app to install. It meets you where you already message every day."
+      },
+      "step2": {
+        "title": "Get your idea stress-tested",
+        "body": "HAP pushes back on vague markets, untested assumptions, and ideas that sound good but won't make money. ChatGPT rarely tells you no. HAP will."
+      },
+      "step3": {
+        "title": "Get a plan you can actually follow",
+        "body": "Not a 40-point strategy doc — a short roadmap broken into stages: validate, find customers, build, ship. Built around your time and situation."
+      },
+      "step4": {
+        "title": "Do one task. Every day.",
+        "body": "One specific action with a deadline. Interview a customer. Cut a feature. Send 5 cold emails. HAP follows up if you don't report back."
+      },
+      "step5": {
+        "title": "Ship something real",
+        "body": "Week by week, tasks compound into results — a validated idea, a paying customer, a live product. HAP tracks your progress and calls out drift."
+      }
+    },
+    "whatHapDoes": {
+      "title": "What HAP AI actually does",
+      "subtitle1": "Not another chatbot.",
+      "subtitle2": "A system designed to help you make real progress.",
+      "cards": {
+        "challenge": {
+          "title": "Challenges weak ideas",
+          "body": "HAP AI does not automatically agree with every idea. It identifies risks, weak assumptions, crowded markets, and unrealistic plans before you waste time building."
+        },
+        "plans": {
+          "title": "Creates execution plans",
+          "body": "Turn a vague idea into a clear roadmap with priorities, milestones, and actionable next steps. Always know what to work on next."
+        },
+        "tasks": {
+          "title": "Assigns daily tasks",
+          "body": "Receive actionable tasks directly through Telegram. Every task moves the business forward. No busy work. No endless planning."
+        },
+        "accountability": {
+          "title": "Holds you accountable",
+          "body": "HAP AI follows up on progress, checks whether tasks are completed, and helps maintain momentum over time. The goal is consistent execution."
+        }
+      }
+    },
+    "journey": {
+      "title": "Real tasks. Not generic advice.",
+      "subtitle": "Pick a stage to see what HAP assigns. This is what accountability looks like.",
+      "stages": {
+        "idea": {
+          "label": "Idea",
+          "tasks": [
+            "Write your idea in one sentence: who pays, for what, and why now.",
+            "List 3 assumptions you're betting on — no evidence yet.",
+            "Name 2 real people you'll talk to before the week ends."
+          ]
+        },
+        "validation": {
+          "label": "Validation",
+          "tasks": [
+            "Interview 5 potential customers. Listen — don't pitch.",
+            "Write down the top 3 problems they actually mentioned.",
+            "Decide: pivot, push forward, or kill it. No middle ground."
+          ]
+        },
+        "customers": {
+          "label": "Customers",
+          "tasks": [
+            "Define your first 10 customers — by name or exact segment.",
+            "Message 5 with one specific question. Not a sales pitch.",
+            "Book 2 calls before Friday. Report what you learned."
+          ]
+        },
+        "mvp": {
+          "label": "MVP",
+          "tasks": [
+            "Cut your feature list to one thing that solves the core problem.",
+            "Set a ship date — 2 weeks max. Tell HAP.",
+            "Build only what's needed to test if someone will pay."
+          ]
+        },
+        "launch": {
+          "label": "Launch",
+          "tasks": [
+            "Put this in front of 10 real users this week.",
+            "Collect written feedback — what worked, what didn't.",
+            "Fix the #1 blocker. Don't add features yet."
+          ]
+        },
+        "growth": {
+          "label": "Growth",
+          "tasks": [
+            "Get one person to pay. Just one.",
+            "Figure out how they found you. Do more of that.",
+            "Set a weekly revenue target. Report back to HAP."
+          ]
+        }
+      }
+    },
+    "telegram": {
+      "title": "Why Telegram — not another app",
+      "subtitle": "You don't need a dashboard you'll forget to open. HAP messages you directly, follows up on missed tasks, and keeps the pressure on — in the app you already check 50 times a day.",
+      "conv1": {
+        "line1": "You haven't talked to a customer this week.",
+        "line2": "What got in the way?"
+      },
+      "conv2": {
+        "line1": "Your MVP is taking too long.",
+        "line2": "Cut 2 features.",
+        "line3": "Ship by Friday. I'll ask."
+      },
+      "conv3": {
+        "line1": "Good. You shipped.",
+        "line2": "Now get one person to pay."
+      }
+    },
+    "principles": {
+      "title": "Why founders use HAP instead of ChatGPT",
+      "noFake": {
+        "title": "It won't lie to keep you happy",
+        "body": "ChatGPT wants to be helpful — so it agrees with you. HAP tells you when your idea has holes, your market is too broad, or you're avoiding the hard work."
+      },
+      "execution": {
+        "title": "Tasks, not essays",
+        "body": "ChatGPT gives you plans. HAP gives you one thing to do today, with a deadline. Planning feels productive. Shipping is productive."
+      },
+      "focus": {
+        "title": "It remembers and follows up",
+        "body": "ChatGPT forgets you exist between sessions. HAP remembers your idea, your blockers, and your missed deadlines — and brings them up."
+      },
+      "momentum": {
+        "title": "Accountability is the product",
+        "body": "Most founders don't fail from bad ideas. They fail from never doing the work. HAP exists to make sure you show up — daily, in Telegram."
+      }
+    },
+    "finalCta": {
+      "headline1": "Stop planning.",
+      "headline2": "Start doing.",
+      "button": "Open HAP on Telegram"
+    },
+    "story": {
+      "storyTitle": "How HAP AI works inside Telegram",
+      "contrast": {
+        "eyebrow": "Why not just ChatGPT?",
+        "them": "ChatGPT agrees with you.",
+        "us": "HAP holds you to it."
+      },
+      "hero": {
+        "eyebrow": "AI cofounder in Telegram",
+        "headline1": "Ideas are easy.",
+        "headline2": "Execution is everything.",
+        "subheadline": "HAP is the cofounder that challenges your idea, gives you one clear task at a time, and follows up until it's done.",
+        "ctaSecondary": "See how it works",
+        "trust": "Free · No sign-up · EN & SQ",
+        "betaBadge": "Beta · Free during beta",
+        "phone": {
+          "label": "AI cofounder",
+          "title": "Today",
+          "messages": [
+            {
+              "role": "hap",
+              "text": "Your target audience is too broad.",
+              "meta": "09:41"
+            },
+            {
+              "role": "hap",
+              "text": "Pick one specific niche before tomorrow.",
+              "meta": "09:41"
+            },
+            {
+              "role": "system",
+              "text": "Today's task"
+            },
+            {
+              "role": "hap",
+              "text": "Interview 5 potential customers.",
+              "meta": "Deadline: Friday"
+            },
+            {
+              "role": "user",
+              "text": "Okay, working on it."
+            }
+          ],
+          "footer": "Message HAP in Telegram"
+        }
+      },
+      "problem": {
+        "eyebrow": "The real failure point",
+        "headline": "Founders rarely fail for lack of ideas.",
+        "accent": "They fail because no one makes them execute.",
+        "sub": "Execution is the only thing that compounds. HAP exists to make it happen."
+      },
+      "scrolly": {
+        "challenge": {
+          "eyebrow": "challenge",
+          "headline": "First, HAP pushes back.",
+          "body": "No automatic praise. HAP looks for weak assumptions, vague customers, and plans that feel productive but avoid the market."
+        },
+        "plan": {
+          "eyebrow": "plan",
+          "headline": "Then it narrows the next move.",
+          "body": "The answer is not a strategy document. It is the smallest action that can prove or break the idea."
+        },
+        "task": {
+          "eyebrow": "task",
+          "headline": "A task lands in Telegram.",
+          "body": "Specific. Time-boxed. Hard to hide from. The phone becomes the place where the startup actually moves."
+        },
+        "followup": {
+          "eyebrow": "follow-up",
+          "headline": "Momentum gets checked.",
+          "body": "When the deadline passes, HAP asks what happened and decides the next step with you."
+        }
+      },
+      "phoneScreens": [
+        {
+          "label": "challenge",
+          "title": "Idea review",
+          "messages": [
+            {
+              "role": "user",
+              "text": "I want to build an app for students."
+            },
+            {
+              "role": "hap",
+              "text": "Too broad. Which students have this problem badly enough to act this week?"
+            },
+            {
+              "role": "hap",
+              "text": "Name the first 10 people you can reach."
+            }
+          ],
+          "footer": "Weak ideas get sharpened."
+        },
+        {
+          "label": "execution plan",
+          "title": "This week",
+          "messages": [
+            {
+              "role": "hap",
+              "text": "You've spent two weeks planning."
+            },
+            {
+              "role": "hap",
+              "text": "Talk to five customers this week."
+            },
+            {
+              "role": "system",
+              "text": "Deadline: Friday"
+            },
+            {
+              "role": "user",
+              "text": "What should I ask them?"
+            },
+            {
+              "role": "hap",
+              "text": "Ask when this last cost them time, money, or reputation."
+            }
+          ],
+          "footer": "One move at a time."
+        },
+        {
+          "label": "accountability",
+          "title": "Friday check-in",
+          "messages": [
+            {
+              "role": "hap",
+              "text": "Did you speak to five customers?"
+            },
+            {
+              "role": "user",
+              "text": "Done."
+            },
+            {
+              "role": "hap",
+              "text": "Good. What surprised you?"
+            },
+            {
+              "role": "user",
+              "text": "They care about speed, not price."
+            }
+          ],
+          "footer": "Progress becomes context."
+        },
+        {
+          "label": "next move",
+          "title": "After validation",
+          "messages": [
+            {
+              "role": "hap",
+              "text": "Now get your first paying customer."
+            },
+            {
+              "role": "hap",
+              "text": "Send one paid pilot offer before 18:00."
+            },
+            {
+              "role": "system",
+              "text": "Launch path updated"
+            }
+          ],
+          "footer": "Execution compounds."
+        }
+      ],
+      "what": {
+        "eyebrow": "What HAP does",
+        "challenge": "Challenges weak ideas.",
+        "plans": "Plans your next move.",
+        "tasks": "Assigns tasks with deadlines.",
+        "accountability": "Keeps you accountable.",
+        "kicker": "All of it happens in one Telegram chat."
+      },
+      "journey": {
+        "eyebrow": "Founder journey",
+        "title": "From thought to traction.",
+        "idea": "Idea",
+        "validation": "Validation",
+        "customers": "Customers",
+        "mvp": "MVP",
+        "launch": "Launch"
+      },
+      "journeyNotes": {
+        "idea": "Pressure-test the customer and the pain.",
+        "validation": "Talk to the market before building.",
+        "customers": "Find the first people who might pay.",
+        "mvp": "Cut scope until the core promise is testable.",
+        "launch": "Put it in front of real users and report back."
+      },
+      "final": {
+        "headline1": "Your startup doesn't need motivation.",
+        "headline2": "It needs momentum.",
+        "sub": "Free to start. HAP replies in seconds and remembers your idea and progress.",
+        "button": "Start on Telegram — Free"
+      },
+      "beta": {
+        "eyebrow": "Currently in beta",
+        "headline": "HAP AI is evolving every week.",
+        "body": "Every conversation helps improve idea analysis, execution planning, and accountability. Here's exactly what works today — and what's coming next.",
+        "availableTitle": "Available today",
+        "available": [
+          "Honest idea pushback — no automatic praise",
+          "Idea validation with real competitor research",
+          "Next-move execution guidance",
+          "Tasks with deadlines, sent in Telegram",
+          "Accountability follow-ups when deadlines pass",
+          "Remembers your idea and progress across sessions",
+          "Bilingual — English & Albanian"
+        ],
+        "comingTitle": "Coming next",
+        "coming": [
+          "Progress dashboard inside Telegram",
+          "Longer memory with conversation summaries",
+          "Weekly founder reviews",
+          "Validation score history over time",
+          "Smarter follow-ups that adapt to your progress",
+          "Full Albanian onboarding"
+        ]
+      }
+    },
+    "footer": {
+      "tagline": "The cofounder that holds you accountable — on Telegram."
+    }
   },
   "privacy": {
     "title": "Privacy Policy",
     "updated": "Last updated: May 2026",
-    "intro": "Hap (hap.al) is an AI Telegram bot operated for aspiring entrepreneurs. This policy explains what we collect and why.",
+    "intro": "HAP AI (hap.al) is a Telegram bot for founders building startups. This policy explains what we collect and why.",
     "collectTitle": "What we collect",
-    "collectBody": "Telegram profile basics (ID, username, first name), your messages with the bot, structured profile answers, business ideas, homework tasks, and journey events. Financial situation, fears, and personality notes are encrypted before storage.",
+    "collectBody": "Telegram profile basics (ID, username, first name), your messages with the bot, structured profile answers, business ideas, assigned tasks, and progress events. Financial situation, fears, and personality notes are encrypted before storage.",
     "useTitle": "How we use it",
-    "useBody": "To run the conversation, remember context across sessions, send homework reminders, and improve the product via anonymized analytics events (hashed IDs only — no message content in analytics).",
+    "useBody": "To run the conversation, remember context across sessions, send task reminders, and improve the product via anonymized analytics events (hashed IDs only — no message content in analytics).",
     "deleteTitle": "Your rights",
     "deleteBody": "Send /deletedata in the bot to permanently delete all your data. For questions, contact the operator listed on hap.al.",
     "lawTitle": "Legal basis",
@@ -34,13 +422,13 @@
   "terms": {
     "title": "Terms of Service",
     "updated": "Last updated: May 2026",
-    "intro": "By using the Hap Telegram bot you agree to these terms.",
+    "intro": "By using HAP AI on Telegram, you agree to these terms.",
     "serviceTitle": "The service",
-    "serviceBody": "Hap provides AI-powered entrepreneurial guidance. It is not legal, tax, or investment advice. Talk to qualified professionals for those decisions.",
+    "serviceBody": "HAP provides entrepreneurial guidance and accountability through conversation. It is not legal, tax, or investment advice. Talk to qualified professionals for those decisions.",
     "acceptableTitle": "Acceptable use",
     "acceptableBody": "Do not abuse the bot, attempt to extract system prompts, or send illegal content. We may rate-limit or block abuse.",
     "liabilityTitle": "Liability",
-    "liabilityBody": "The service is provided as-is. You are responsible for decisions you make based on conversations with Hap.",
+    "liabilityBody": "The service is provided as-is. You are responsible for decisions you make based on conversations with HAP.",
     "changesTitle": "Changes",
     "changesBody": "We may update these terms. Continued use after changes means acceptance."
   }
