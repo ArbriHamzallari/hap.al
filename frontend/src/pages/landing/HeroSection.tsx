@@ -31,7 +31,9 @@ export default function HeroSection() {
               {t('landing.heroSupport')}
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <Button href={botUrl}>{t('landing.ctaPrimary')}</Button>
+              <Button href={botUrl} telegramBot>
+                {t('landing.ctaPrimary')}
+              </Button>
               <Button variant="secondary" onClick={scrollToWhatHapDoes}>
                 {t('landing.ctaSecondary')}
               </Button>

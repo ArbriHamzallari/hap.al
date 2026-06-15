@@ -20,7 +20,7 @@ export default function FinalCTASection() {
               <span className="text-accent">{t('landing.finalCta.headline2')}</span>
             </h2>
             <div className="mt-12">
-              <Button href={botUrl} className="px-8 py-3 text-base">
+              <Button href={botUrl} telegramBot className="px-8 py-3 text-base">
                 {t('landing.finalCta.button')}
               </Button>
             </div>

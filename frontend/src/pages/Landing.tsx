@@ -293,7 +293,7 @@ function HeroSection({ screen }: { screen: PhoneScreen }) {
                   {t('landing.story.hero.betaBadge')}
                 </span>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-                  <Button href={botUrl} className="rounded-full px-7 py-3 text-base">
+                  <Button href={botUrl} telegramBot className="rounded-full px-7 py-3 text-base">
                     {t('landing.ctaPrimary')}
                   </Button>
                   <button
@@ -741,7 +741,7 @@ function FinalCTA({ screen }: { screen: PhoneScreen }) {
             </MotionReveal>
             <MotionReveal delay={0.14}>
               <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
-                <Button href={botUrl} className="rounded-full px-8 py-3.5 text-base">
+                <Button href={botUrl} telegramBot className="rounded-full px-8 py-3.5 text-base">
                   {t('landing.story.final.button')}
                 </Button>
               </div>

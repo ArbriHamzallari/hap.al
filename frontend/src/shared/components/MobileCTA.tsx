@@ -15,7 +15,7 @@ export default function MobileCTA() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.45, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
     >
-      <Button href={botUrl} className="w-full">
+      <Button href={botUrl} telegramBot className="w-full">
         {t('landing.ctaPrimary')}
       </Button>
     </motion.div>
