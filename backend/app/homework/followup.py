@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import logging
+from datetime import UTC, datetime
 
 from telegram import Bot
 from telegram.constants import ParseMode
 from telegram.error import BadRequest, Forbidden
 
-from app.database.homework import list_due_reminders, mark_reminder_sent
+from app.database.homework import create_reminder, list_due_reminders, mark_reminder_sent
 from app.database.users import get_telegram_id, get_user_language
 from app.i18n.loader import t
 from app.utils.telegram_format import to_telegram_html
@@ -32,6 +33,20 @@ async def deliver_followup(bot: Bot, chat_id: int, message: str) -> bool:
     except Exception:
         logger.exception("follow-up send failed; will retry next cycle")
         return False
+
+
+async def schedule_user_reminder(
+    bot: Bot,
+    user_id: str,
+    telegram_id: int,
+    when: datetime,
+    message: str,
+) -> None:
+    """Persist a reminder and deliver immediately when it is already due."""
+    homework_id = await create_reminder(user_id, when, message)
+    if when.astimezone(UTC) <= datetime.now(UTC):
+        if await deliver_followup(bot, telegram_id, message):
+            await mark_reminder_sent(homework_id)
 
 
 async def process_due_followups(bot: Bot) -> int:

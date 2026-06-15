@@ -25,7 +25,8 @@ from app.conversation.markers import parse_reply
 from app.conversation.reminders import reminder_loop
 from app.database import analytics as analytics_db
 from app.database import journey_events
-from app.database.homework import create_reminder, list_pending
+from app.database.homework import list_pending
+from app.homework.followup import schedule_user_reminder
 from app.database.ideas import deactivate_active_idea, get_active_idea
 from app.database.users import delete_user_data, get_or_create_user, update_field
 from app.i18n.loader import Lang, t
@@ -117,8 +118,17 @@ async def _handle(update: Update, context: ContextTypes.DEFAULT_TYPE, text: str)
 
     parsed = parse_reply(raw_reply)
 
+    markup = get_keyboard(parsed.button_key, user.language)
+    await _send_reply(chat, parsed.text, reply_markup=markup)
+
     for reminder in parsed.reminders:
-        await create_reminder(user.id, reminder.when, reminder.message)
+        await schedule_user_reminder(
+            context.application.bot,
+            user.id,
+            tg_user.id,
+            reminder.when,
+            reminder.message,
+        )
         logger.info(
             "reminder scheduled",
             extra={"user_hash": user_hash, "fires_at": reminder.when.isoformat()},
@@ -171,9 +181,6 @@ async def _handle(update: Update, context: ContextTypes.DEFAULT_TYPE, text: str)
         logger.info("homework reported skipped", extra={"user_hash": user_hash})
         await engine.run_homework_update(user, completed=False)
         await analytics_db.track_event(user_hash, "homework_skipped", {"language": user.language})
-
-    markup = get_keyboard(parsed.button_key, user.language)
-    await _send_reply(chat, parsed.text, reply_markup=markup)
 
 
 async def _handle_deletedata_confirm(
@@ -477,9 +484,7 @@ async def _on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def _post_init(application: AppType) -> None:
-    settings: Settings = application.bot_data["settings"]
-    if settings.use_polling:
-        application.create_task(reminder_loop(application))
+    application.create_task(reminder_loop(application))
 
 
 def build_application(settings: Settings) -> AppType:
