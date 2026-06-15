@@ -47,8 +47,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
     yield
 
-    if not settings.use_polling:
-        await ptb.bot.delete_webhook()
+    # Do not clear the webhook on shutdown. During rolling deploys, the old Railway
+    # process can shut down after the new one registers the webhook, leaving Telegram
+    # with no webhook URL.
     await ptb.stop()
     await ptb.shutdown()
 
